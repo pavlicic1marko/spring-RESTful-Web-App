@@ -5,17 +5,16 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-@Table
 public class UserEntity implements Serializable {
 
     private static final long serialVersionUID = 4888534534534534538L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(nullable = false, length = 50)
-    private UUID uuid;
+    private String userId;
     @Column(nullable = false, length = 50)
     private String firstName;
     @Column(nullable = false, length = 50)
@@ -25,20 +24,20 @@ public class UserEntity implements Serializable {
     @Column(nullable = false, length = 50)
     private String encryptedPassWord;
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
     }
 
     public String getFirstName() {

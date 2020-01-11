@@ -1,5 +1,7 @@
 package com.webApp.springRESTfulWebApp.service.interfaces;
 
+import data.transfer.objects.UserDto;
+
 public interface UserService {
     String getUsers();
 
@@ -7,6 +9,6 @@ public interface UserService {
 
     String deleteUser();
 
-    String createUser();
+    String createUser(UserDto userDto);
 
 }
