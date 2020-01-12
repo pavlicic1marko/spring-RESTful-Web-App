@@ -49,9 +49,11 @@ public class UserController {
         return userServiceImplementation.deleteUser(userId);
     }
 
-    @PutMapping
-    public String updateUser() {
-        return userServiceImplementation.updateUser();
+    @PutMapping(path = "/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserInformationResponseModel updateUser(@PathVariable String userId, @RequestBody UserInformationRequestModel userInformation) {
+        UserDto userDto = modelMapper.map(userInformation, UserDto.class);
+        UserDto updatedValue = userServiceImplementation.updateUser(userId, userDto);
+        return modelMapper.map(updatedValue, UserInformationResponseModel.class);
     }
 
 

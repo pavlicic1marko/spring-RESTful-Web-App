@@ -32,8 +32,14 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public String updateUser() {
-        return "this method will update a user";
+    public UserDto updateUser(String userId, UserDto userDto) {
+        UserEntity userEntity = userRepository.findByUserId(userId);
+        userEntity.setEmail(userDto.getEmail());
+        userEntity.setFirstName(userDto.getFirstName());
+        userEntity.setLastName(userDto.getLastName());
+        UserEntity updatedUserEntity = userRepository.save(userEntity);
+        UserDto returnValue = modelMapper.map(updatedUserEntity, UserDto.class);
+        return returnValue;
     }
 
     @Override
