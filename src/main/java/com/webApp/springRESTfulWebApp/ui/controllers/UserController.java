@@ -19,15 +19,23 @@ public class UserController {
     @Autowired
     private UserServiceImplementation userServiceImplementation;
 
+    ModelMapper modelMapper = new ModelMapper();
+
 
     @GetMapping
     public String getUsers() {
         return userServiceImplementation.getUsers();
     }
 
+    @GetMapping(path = "/{userId}")
+    public UserInformationResponseModel getUser(@PathVariable String userId) {
+        UserDto userDto = userServiceImplementation.getUserByUserId(userId);
+        UserInformationResponseModel returnValue = modelMapper.map(userDto, UserInformationResponseModel.class);
+        return returnValue;
+    }
+
     @PostMapping
     public UserInformationResponseModel createUser(@RequestBody UserInformationRequestModel userInformation) {
-        ModelMapper modelMapper = new ModelMapper();
         UserDto userDto = modelMapper.map(userInformation, UserDto.class);
         UserDto userDtoSavedData = userServiceImplementation.createUser(userDto);
         UserInformationResponseModel returnValue = modelMapper.map(userDtoSavedData, UserInformationResponseModel.class);

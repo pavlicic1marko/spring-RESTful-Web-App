@@ -16,6 +16,16 @@ public class UserServiceImplementation implements UserService {
     @Autowired
     UserRepository userRepository;
 
+    ModelMapper modelMapper = new ModelMapper();
+
+
+    @Override
+    public UserDto getUserByUserId(String userId) {
+        UserEntity userEntity = userRepository.findByUserId(userId);
+        UserDto returnValue = modelMapper.map(userEntity, UserDto.class);
+        return returnValue;
+    }
+
     @Override
     public String getUsers() {
         return "this method will return list of all users";
@@ -38,7 +48,6 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        ModelMapper modelMapper = new ModelMapper();
         UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
         UUID uuid = UUID.randomUUID();
         String userId = uuid.toString();
