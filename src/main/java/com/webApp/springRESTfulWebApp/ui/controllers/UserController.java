@@ -7,7 +7,10 @@ import com.webApp.springRESTfulWebApp.service.implementation.UserServiceImplemen
 import data.transfer.objects.UserDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.awt.*;
 
 @RequestMapping("users")
 @RestController
@@ -25,17 +28,17 @@ public class UserController {
     @PostMapping
     public UserInformationResponseModel createUser(@RequestBody UserInformationRequestModel userInformation) {
         ModelMapper modelMapper = new ModelMapper();
-        UserDto userDto = modelMapper.map(userInformation,UserDto.class);
-        UserDto userDtoSavedData= userServiceImplementation.createUser(userDto);
-        UserInformationResponseModel returnValue = modelMapper.map(userDtoSavedData,UserInformationResponseModel.class);
+        UserDto userDto = modelMapper.map(userInformation, UserDto.class);
+        UserDto userDtoSavedData = userServiceImplementation.createUser(userDto);
+        UserInformationResponseModel returnValue = modelMapper.map(userDtoSavedData, UserInformationResponseModel.class);
         return returnValue;
 
 
     }
 
-    @DeleteMapping
-    public String deleteUser() {
-        return userServiceImplementation.deleteUser();
+    @DeleteMapping(path = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String deleteUser(@PathVariable String userId) {
+        return userServiceImplementation.deleteUser(userId);
     }
 
     @PutMapping

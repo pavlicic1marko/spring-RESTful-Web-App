@@ -27,8 +27,13 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public String deleteUser() {
-        return "this method will delete a user";
+    public String deleteUser(String userId) {
+        UserEntity userEntity = userRepository.findByUserId(userId);
+        if (userEntity == null) {
+            throw new RuntimeException("There is no user with provided User Id");
+        }
+        userRepository.delete(userEntity);
+        return "user with id:" + userId + " was deleted";
     }
 
     @Override
@@ -39,8 +44,8 @@ public class UserServiceImplementation implements UserService {
         String userId = uuid.toString();
         userEntity.setUserId(userId);
         userEntity.setEncryptedPassWord("testing");
-        UserEntity savedUserEntity= userRepository.save(userEntity);
-        UserDto returnValues = modelMapper.map(savedUserEntity,UserDto.class);
+        UserEntity savedUserEntity = userRepository.save(userEntity);
+        UserDto returnValues = modelMapper.map(savedUserEntity, UserDto.class);
         return returnValues;
     }
 }
