@@ -9,6 +9,6 @@ public interface UserService {
 
     String deleteUser();
 
-    String createUser(UserDto userDto);
+    UserDto createUser(UserDto userDto);
 
 }

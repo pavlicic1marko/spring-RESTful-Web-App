@@ -2,6 +2,7 @@ package com.webApp.springRESTfulWebApp.ui.controllers;
 
 
 import com.webApp.springRESTfulWebApp.model.request.UserInformationRequestModel;
+import com.webApp.springRESTfulWebApp.model.response.UserInformationResponseModel;
 import com.webApp.springRESTfulWebApp.service.implementation.UserServiceImplementation;
 import data.transfer.objects.UserDto;
 import org.modelmapper.ModelMapper;
@@ -22,10 +23,14 @@ public class UserController {
     }
 
     @PostMapping
-    public String createUser(@RequestBody UserInformationRequestModel userInformation) {
+    public UserInformationResponseModel createUser(@RequestBody UserInformationRequestModel userInformation) {
         ModelMapper modelMapper = new ModelMapper();
         UserDto userDto = modelMapper.map(userInformation,UserDto.class);
-        return userServiceImplementation.createUser(userDto);
+        UserDto userDtoSavedData= userServiceImplementation.createUser(userDto);
+        UserInformationResponseModel returnValue = modelMapper.map(userDtoSavedData,UserInformationResponseModel.class);
+        return returnValue;
+
+
     }
 
     @DeleteMapping

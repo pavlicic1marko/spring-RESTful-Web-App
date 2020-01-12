@@ -32,14 +32,15 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public String createUser(UserDto userDto) {
+    public UserDto createUser(UserDto userDto) {
         ModelMapper modelMapper = new ModelMapper();
         UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
         UUID uuid = UUID.randomUUID();
         String userId = uuid.toString();
         userEntity.setUserId(userId);
         userEntity.setEncryptedPassWord("testing");
-        userRepository.save(userEntity);
-        return "this method will create a user";
+        UserEntity savedUserEntity= userRepository.save(userEntity);
+        UserDto returnValues = modelMapper.map(savedUserEntity,UserDto.class);
+        return returnValues;
     }
 }
