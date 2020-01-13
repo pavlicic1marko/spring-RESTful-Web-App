@@ -4,6 +4,7 @@ package com.webApp.springRESTfulWebApp.ui.controllers;
 import com.webApp.springRESTfulWebApp.model.request.UserInformationRequestModel;
 import com.webApp.springRESTfulWebApp.model.response.UserInformationResponseModel;
 import com.webApp.springRESTfulWebApp.service.implementation.UserServiceImplementation;
+import com.webApp.springRESTfulWebApp.shared.Utils;
 import data.transfer.objects.UserDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,8 @@ public class UserController {
 
     @PostMapping
     public UserInformationResponseModel createUser(@RequestBody UserInformationRequestModel userInformation) {
+        Utils utils = new Utils();
+        utils.checkUserData(userInformation);
         UserDto userDto = modelMapper.map(userInformation, UserDto.class);
         UserDto userDtoSavedData = userServiceImplementation.createUser(userDto);
         UserInformationResponseModel returnValue = modelMapper.map(userDtoSavedData, UserInformationResponseModel.class);
@@ -59,6 +62,8 @@ public class UserController {
 
     @PutMapping(path = "/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserInformationResponseModel updateUser(@PathVariable String userId, @RequestBody UserInformationRequestModel userInformation) {
+        Utils utils = new Utils();
+        utils.checkUserData(userInformation);
         UserDto userDto = modelMapper.map(userInformation, UserDto.class);
         UserDto updatedValue = userServiceImplementation.updateUser(userId, userDto);
         return modelMapper.map(updatedValue, UserInformationResponseModel.class);
