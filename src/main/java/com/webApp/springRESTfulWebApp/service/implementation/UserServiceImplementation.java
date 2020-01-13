@@ -55,13 +55,13 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public String deleteUser(String userId) {
+    public UserDto deleteUser(String userId) {
         UserEntity userEntity = userRepository.findByUserId(userId);
         if (userEntity == null) {
             throw new RuntimeException("There is no user with provided User Id");
         }
         userRepository.delete(userEntity);
-        return "user with id:" + userId + " was deleted";
+        return modelMapper.map(userEntity, UserDto.class);
     }
 
     @Override

@@ -52,8 +52,9 @@ public class UserController {
     }
 
     @DeleteMapping(path = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String deleteUser(@PathVariable String userId) {
-        return userServiceImplementation.deleteUser(userId);
+    public UserInformationResponseModel deleteUser(@PathVariable String userId) {
+        UserDto returnValue = userServiceImplementation.deleteUser(userId);
+        return modelMapper.map(returnValue, UserInformationResponseModel.class);
     }
 
     @PutMapping(path = "/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
