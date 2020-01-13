@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @RequestMapping("users")
 @RestController
@@ -23,8 +25,13 @@ public class UserController {
 
 
     @GetMapping
-    public String getUsers() {
-        return userServiceImplementation.getUsers();
+    public List<UserInformationResponseModel> getUsers(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "limit", defaultValue = "20") int limit) {
+        List<UserInformationResponseModel> userDetailsList = new ArrayList<>();
+        List<UserDto> userDtoList = userServiceImplementation.getUsers(page, limit);
+        for (UserDto userDto : userDtoList) {
+            userDetailsList.add(modelMapper.map(userDto, UserInformationResponseModel.class));
+        }
+        return userDetailsList;
     }
 
     @GetMapping(path = "/{userId}")

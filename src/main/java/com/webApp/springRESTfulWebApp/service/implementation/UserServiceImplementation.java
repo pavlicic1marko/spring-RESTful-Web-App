@@ -6,8 +6,13 @@ import com.webApp.springRESTfulWebApp.service.interfaces.UserService;
 import data.transfer.objects.UserDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -27,8 +32,15 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public String getUsers() {
-        return "this method will return list of all users";
+    public List<UserDto> getUsers(int page, int limit) {
+        Pageable pageableRequest = PageRequest.of(page, limit);
+        Page<UserEntity> userPage = userRepository.findAll(pageableRequest);
+        List<UserDto> userDtoList = new ArrayList<>();
+
+        for (UserEntity userEntity : userPage) {
+            userDtoList.add(modelMapper.map(userEntity, UserDto.class));
+        }
+        return userDtoList;
     }
 
     @Override
