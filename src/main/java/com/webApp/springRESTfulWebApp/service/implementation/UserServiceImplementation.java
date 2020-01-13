@@ -19,9 +19,9 @@ import java.util.UUID;
 public class UserServiceImplementation implements UserService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
-    ModelMapper modelMapper = new ModelMapper();
+    private ModelMapper modelMapper = new ModelMapper();
 
 
     @Override
@@ -37,9 +37,8 @@ public class UserServiceImplementation implements UserService {
         Page<UserEntity> userPage = userRepository.findAll(pageableRequest);
         List<UserDto> userDtoList = new ArrayList<>();
 
-        for (UserEntity userEntity : userPage) {
-            userDtoList.add(modelMapper.map(userEntity, UserDto.class));
-        }
+        userPage.stream().forEach(userDtoStream -> userDtoList.add(modelMapper.map(userDtoStream, UserDto.class)));
+
         return userDtoList;
     }
 

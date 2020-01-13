@@ -22,16 +22,16 @@ public class UserController {
     @Autowired
     private UserServiceImplementation userServiceImplementation;
 
-    ModelMapper modelMapper = new ModelMapper();
+    private ModelMapper modelMapper = new ModelMapper();
 
 
     @GetMapping
     public List<UserInformationResponseModel> getUsers(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "limit", defaultValue = "20") int limit) {
         List<UserInformationResponseModel> userDetailsList = new ArrayList<>();
         List<UserDto> userDtoList = userServiceImplementation.getUsers(page, limit);
-        for (UserDto userDto : userDtoList) {
-            userDetailsList.add(modelMapper.map(userDto, UserInformationResponseModel.class));
-        }
+
+        userDtoList.stream().forEach(userDtoStream -> userDetailsList.add(modelMapper.map(userDtoStream, UserInformationResponseModel.class)));
+
         return userDetailsList;
     }
 
