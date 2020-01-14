@@ -33,6 +33,9 @@ public class UserController {
     @GetMapping
     public List<UserInformationResponseModel> getUsers(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "limit", defaultValue = "20") int limit) {
         List<UserInformationResponseModel> userDetailsList = new ArrayList<>();
+        if (page > 0) {
+            page -= 1;// if the user enters page 1 it will return the second page (0 is the first page) , with this line page 1 will return the first page
+        }
         List<UserDto> userDtoList = userServiceImplementation.getUsers(page, limit);
 
         userDtoList.forEach(userDtoStream -> userDetailsList.add(modelMapper.map(userDtoStream, UserInformationResponseModel.class)));
