@@ -2,9 +2,12 @@ package com.webApp.springRESTfulWebApp.ui.controllers;
 
 
 import com.webApp.springRESTfulWebApp.model.request.UserInformationRequestModel;
+import com.webApp.springRESTfulWebApp.model.response.AddressInformationResponseModel;
 import com.webApp.springRESTfulWebApp.model.response.UserInformationResponseModel;
+import com.webApp.springRESTfulWebApp.service.implementation.AddressServiceImplementation;
 import com.webApp.springRESTfulWebApp.service.implementation.UserServiceImplementation;
 import com.webApp.springRESTfulWebApp.shared.Utils;
+import data.transfer.objects.AddressDto;
 import data.transfer.objects.UserDto;
 import io.swagger.annotations.ApiOperation;
 import org.modelmapper.ModelMapper;
@@ -22,6 +25,9 @@ public class UserController {
 
     @Autowired
     private UserServiceImplementation userServiceImplementation;
+
+    @Autowired
+    private AddressServiceImplementation addressServiceImplementation;
 
     private ModelMapper modelMapper = new ModelMapper();
 
@@ -78,4 +84,11 @@ public class UserController {
     }
 
 
+    @GetMapping(path = "/{id}/addresses")
+    public List<AddressInformationResponseModel> getUserAddresses(@PathVariable("id") String id) {
+        List<AddressDto> addressDtoList = addressServiceImplementation.getAddressesByUserId(id);
+        List<AddressInformationResponseModel> returnValue = new ArrayList<>();
+        addressDtoList.forEach(address -> returnValue.add(modelMapper.map(address, AddressInformationResponseModel.class)));
+        return returnValue;
+    }
 }
