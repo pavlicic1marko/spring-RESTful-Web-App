@@ -2,7 +2,7 @@ package com.webApp.springRESTfulWebApp.entityes;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.UUID;
+import java.util.List;
 
 @Entity
 public class UserEntity implements Serializable {
@@ -23,6 +23,9 @@ public class UserEntity implements Serializable {
     private String email;
     @Column(nullable = false, length = 50)
     private String encryptedPassWord;
+
+    @OneToMany(mappedBy = "userDetails", cascade = CascadeType.ALL)
+    private List<AddressEntity> addresses;
 
     public String getUserId() {
         return userId;
@@ -70,5 +73,13 @@ public class UserEntity implements Serializable {
 
     public void setEncryptedPassWord(String encryptedPassWord) {
         this.encryptedPassWord = encryptedPassWord;
+    }
+
+    public List<AddressEntity> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<AddressEntity> addresses) {
+        this.addresses = addresses;
     }
 }

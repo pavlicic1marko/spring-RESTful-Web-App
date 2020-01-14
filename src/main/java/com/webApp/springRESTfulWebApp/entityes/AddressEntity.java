@@ -27,6 +27,11 @@ public class AddressEntity implements Serializable {
     @Column(nullable = false, length = 50)
     private String addressType;
 
+    @ManyToOne
+    @JoinColumn(name = "users_id")
+    private UserEntity userDetails;
+
+
     public String getAddressId() {
         return addressId;
     }
@@ -65,5 +70,13 @@ public class AddressEntity implements Serializable {
 
     public void setAddressType(String addressType) {
         this.addressType = addressType;
+    }
+
+    public UserEntity getUserDetails() {
+        return userDetails;
+    }
+
+    public void setUserDetails(UserEntity userDetails) {
+        this.userDetails = userDetails;
     }
 }

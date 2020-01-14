@@ -3,6 +3,7 @@ package com.webApp.springRESTfulWebApp.service.implementation;
 import com.webApp.springRESTfulWebApp.entityes.UserEntity;
 import com.webApp.springRESTfulWebApp.repositories.UserRepository;
 import com.webApp.springRESTfulWebApp.service.interfaces.UserService;
+import data.transfer.objects.AddressDto;
 import data.transfer.objects.UserDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,12 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) {
+        for (int i = 0; i < userDto.getAddresses().size(); i++) {
+            AddressDto address = userDto.getAddresses().get(i);
+            address.setUserDetails(userDto);
+            address.setAddressId("test");
+            userDto.getAddresses().set(i, address);
+        }
         UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
         UUID uuid = UUID.randomUUID();
         String userId = uuid.toString();

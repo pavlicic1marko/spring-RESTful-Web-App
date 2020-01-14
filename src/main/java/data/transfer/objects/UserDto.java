@@ -1,10 +1,14 @@
 package data.transfer.objects;
 
+import java.util.List;
+
 public class UserDto {
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+    private List<AddressDto> addresses;
+
 
     public String getFirstName() {
         return firstName;
@@ -36,5 +40,13 @@ public class UserDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<AddressDto> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<AddressDto> addresses) {
+        this.addresses = addresses;
     }
 }

@@ -12,6 +12,8 @@ public class AddressDto {
 
     private String addressType;
 
+    private UserDto userDetails;
+
 
     public String getAddressId() {
         return addressId;
@@ -51,6 +53,14 @@ public class AddressDto {
 
     public void setAddressType(String addressType) {
         this.addressType = addressType;
+    }
+
+    public UserDto getUserDetails() {
+        return userDetails;
+    }
+
+    public void setUserDetails(UserDto userDetails) {
+        this.userDetails = userDetails;
     }
 }
 
