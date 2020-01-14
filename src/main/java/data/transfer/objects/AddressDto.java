@@ -1,31 +1,17 @@
-package com.webApp.springRESTfulWebApp.entityes;
+package data.transfer.objects;
 
-import javax.persistence.*;
-import java.io.Serializable;
+public class AddressDto {
 
-@Entity
-public class AddressEntity implements Serializable {
-    private static final long serialVersionUID = 4888534534534534539L;
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(nullable = false, length = 50)
     private String addressId;
 
-    @Column(nullable = false, length = 50)
     private String city;
 
-    @Column(nullable = false, length = 50)
     private String streetName;
 
-    @Column(nullable = false, length = 50)
     private String streetNumber;
 
-    @Column(nullable = false, length = 50)
     private String addressType;
+
 
     public String getAddressId() {
         return addressId;
@@ -67,3 +53,5 @@ public class AddressEntity implements Serializable {
         this.addressType = addressType;
     }
 }
+
+
