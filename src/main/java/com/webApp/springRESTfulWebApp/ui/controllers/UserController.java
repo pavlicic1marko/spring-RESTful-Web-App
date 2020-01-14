@@ -25,6 +25,9 @@ public class UserController {
 
     private ModelMapper modelMapper = new ModelMapper();
 
+    private Utils utils = new Utils();
+
+
 
     @ApiOperation(value = "Get information for multiple users Endpoint")
     @GetMapping
@@ -32,7 +35,7 @@ public class UserController {
         List<UserInformationResponseModel> userDetailsList = new ArrayList<>();
         List<UserDto> userDtoList = userServiceImplementation.getUsers(page, limit);
 
-        userDtoList.stream().forEach(userDtoStream -> userDetailsList.add(modelMapper.map(userDtoStream, UserInformationResponseModel.class)));
+        userDtoList.forEach(userDtoStream -> userDetailsList.add(modelMapper.map(userDtoStream, UserInformationResponseModel.class)));
 
         return userDetailsList;
     }
@@ -41,19 +44,16 @@ public class UserController {
     @GetMapping(path = "/{userId}")
     public UserInformationResponseModel getUser(@PathVariable String userId) {
         UserDto userDto = userServiceImplementation.getUserByUserId(userId);
-        UserInformationResponseModel returnValue = modelMapper.map(userDto, UserInformationResponseModel.class);
-        return returnValue;
+        return modelMapper.map(userDto, UserInformationResponseModel.class);
     }
 
     @ApiOperation(value = "Create a new user Endpoint")
     @PostMapping
     public UserInformationResponseModel createUser(@RequestBody UserInformationRequestModel userInformation) {
-        Utils utils = new Utils();
         utils.checkUserData(userInformation);
         UserDto userDto = modelMapper.map(userInformation, UserDto.class);
         UserDto userDtoSavedData = userServiceImplementation.createUser(userDto);
-        UserInformationResponseModel returnValue = modelMapper.map(userDtoSavedData, UserInformationResponseModel.class);
-        return returnValue;
+        return modelMapper.map(userDtoSavedData, UserInformationResponseModel.class);
 
 
     }
@@ -68,7 +68,6 @@ public class UserController {
     @ApiOperation(value = "Update user information Endpoint")
     @PutMapping(path = "/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserInformationResponseModel updateUser(@PathVariable String userId, @RequestBody UserInformationRequestModel userInformation) {
-        Utils utils = new Utils();
         utils.checkUserData(userInformation);
         UserDto userDto = modelMapper.map(userInformation, UserDto.class);
         UserDto updatedValue = userServiceImplementation.updateUser(userId, userDto);

@@ -27,8 +27,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     public UserDto getUserByUserId(String userId) {
         UserEntity userEntity = userRepository.findByUserId(userId);
-        UserDto returnValue = modelMapper.map(userEntity, UserDto.class);
-        return returnValue;
+        return modelMapper.map(userEntity, UserDto.class);
     }
 
     @Override
@@ -37,7 +36,7 @@ public class UserServiceImplementation implements UserService {
         Page<UserEntity> userPage = userRepository.findAll(pageableRequest);
         List<UserDto> userDtoList = new ArrayList<>();
 
-        userPage.stream().forEach(userDtoStream -> userDtoList.add(modelMapper.map(userDtoStream, UserDto.class)));
+        userPage.forEach(userDtoStream -> userDtoList.add(modelMapper.map(userDtoStream, UserDto.class)));
 
         return userDtoList;
     }
@@ -49,8 +48,7 @@ public class UserServiceImplementation implements UserService {
         userEntity.setFirstName(userDto.getFirstName());
         userEntity.setLastName(userDto.getLastName());
         UserEntity updatedUserEntity = userRepository.save(userEntity);
-        UserDto returnValue = modelMapper.map(updatedUserEntity, UserDto.class);
-        return returnValue;
+        return modelMapper.map(updatedUserEntity, UserDto.class);
     }
 
     @Override
@@ -71,7 +69,6 @@ public class UserServiceImplementation implements UserService {
         userEntity.setUserId(userId);
         userEntity.setEncryptedPassWord("testing");
         UserEntity savedUserEntity = userRepository.save(userEntity);
-        UserDto returnValues = modelMapper.map(savedUserEntity, UserDto.class);
-        return returnValues;
+        return modelMapper.map(savedUserEntity, UserDto.class);
     }
 }
