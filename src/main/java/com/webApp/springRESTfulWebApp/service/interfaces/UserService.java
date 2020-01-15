@@ -1,10 +1,11 @@
 package com.webApp.springRESTfulWebApp.service.interfaces;
 
 import data.transfer.objects.UserDto;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
     UserDto getUserByUserId(String userID);
 
     List<UserDto> getUsers(int page, int limit);

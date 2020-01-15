@@ -21,7 +21,7 @@ public class UserEntity implements Serializable {
     private String lastName;
     @Column(nullable = false, length = 50, unique = true)
     private String email;
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 200)
     private String encryptedPassWord;
 
     @OneToMany(mappedBy = "userDetails", cascade = CascadeType.ALL)

@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +24,9 @@ public class UserServiceImplementation implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private ModelMapper modelMapper = new ModelMapper();
 
@@ -74,8 +80,13 @@ public class UserServiceImplementation implements UserService {
         UUID uuid = UUID.randomUUID();
         String userId = uuid.toString();
         userEntity.setUserId(userId);
-        userEntity.setEncryptedPassWord("testing");
+        userEntity.setEncryptedPassWord(bCryptPasswordEncoder.encode(userDto.getPassword()));
         UserEntity savedUserEntity = userRepository.save(userEntity);
         return modelMapper.map(savedUserEntity, UserDto.class);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return null;
     }
 }
