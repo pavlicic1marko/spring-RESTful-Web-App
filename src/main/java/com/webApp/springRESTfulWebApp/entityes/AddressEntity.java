@@ -72,9 +72,6 @@ public class AddressEntity implements Serializable {
         this.addressType = addressType;
     }
 
-    public UserEntity getUserDetails() {
-        return userDetails;
-    }
 
     public void setUserDetails(UserEntity userDetails) {
         this.userDetails = userDetails;

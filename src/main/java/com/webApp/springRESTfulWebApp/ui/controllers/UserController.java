@@ -62,7 +62,8 @@ public class UserController {
         utils.checkUserData(userInformation);
         UserDto userDto = modelMapper.map(userInformation, UserDto.class);
         UserDto userDtoSavedData = userServiceImplementation.createUser(userDto);
-        return modelMapper.map(userDtoSavedData, UserInformationResponseModel.class);
+        UserInformationResponseModel returnValue = modelMapper.map(userDtoSavedData, UserInformationResponseModel.class);
+        return returnValue;
 
 
     }
