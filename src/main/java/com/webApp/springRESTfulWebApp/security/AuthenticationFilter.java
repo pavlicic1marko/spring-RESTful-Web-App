@@ -1,7 +1,10 @@
 package com.webApp.springRESTfulWebApp.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.webApp.springRESTfulWebApp.SpringApplicationContext;
 import com.webApp.springRESTfulWebApp.model.request.UserLoginRequestModel;
+import com.webApp.springRESTfulWebApp.service.interfaces.UserService;
+import data.transfer.objects.UserDto;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -64,6 +67,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .compact();
 
         res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);//add to the header of response, client needs to store it
+
+        UserService userService = (UserService) SpringApplicationContext.getBean("userServiceImplementation");
+        UserDto userDto = userService.getUser(userName);
+
+        res.addHeader("UserID", userDto.getUserId());
 
     }
 }

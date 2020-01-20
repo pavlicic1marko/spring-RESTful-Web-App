@@ -1,5 +1,9 @@
 package com.webApp.springRESTfulWebApp.entityes;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -24,6 +28,8 @@ public class UserEntity implements Serializable {
     @Column(nullable = false, length = 200)
     private String encryptedPassWord;
 
+    @JsonManagedReference
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "userDetails", cascade = CascadeType.ALL)
     private List<AddressEntity> addresses;
 

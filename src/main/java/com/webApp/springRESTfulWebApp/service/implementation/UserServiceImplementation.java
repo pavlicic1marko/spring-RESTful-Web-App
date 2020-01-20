@@ -80,10 +80,19 @@ public class UserServiceImplementation implements UserService {
         UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
         UUID uuid = UUID.randomUUID();
         String userId = uuid.toString();
-        userEntity.setUserId(userId);
+        userEntity.setUserId(userId);//TODO refactor 3 lines to one
         userEntity.setEncryptedPassWord(bCryptPasswordEncoder.encode(userDto.getPassword()));
         UserEntity savedUserEntity = userRepository.save(userEntity);
         return modelMapper.map(savedUserEntity, UserDto.class);
+    }
+
+    @Override
+    public UserDto getUser(String email) {
+        UserEntity userEntity = userRepository.findByEmail(email);
+        userEntity.setAddresses(null);
+        UserDto returnValue = modelMapper.map(userEntity, UserDto.class);
+
+        return returnValue;
     }
 
     @Override

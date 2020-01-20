@@ -1,5 +1,7 @@
 package com.webApp.springRESTfulWebApp.entityes;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -28,7 +30,8 @@ public class AddressEntity implements Serializable {
     private String addressType;
 
     @ManyToOne
-    @JoinColumn(name = "users_id")
+    @JsonBackReference
+    @JoinColumn(name = "users_id")//,insertable = false, updatable = false
     private UserEntity userDetails;
 
 
