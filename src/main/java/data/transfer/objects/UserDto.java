@@ -7,6 +7,7 @@ public class UserDto {
     private String lastName;
     private String email;
     private String password;
+    private String userId;
     private List<AddressDto> addresses;
 
 
@@ -40,6 +41,14 @@ public class UserDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public List<AddressDto> getAddresses() {
