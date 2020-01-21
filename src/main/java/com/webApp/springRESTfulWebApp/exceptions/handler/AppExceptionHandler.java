@@ -1,5 +1,6 @@
 package com.webApp.springRESTfulWebApp.exceptions.handler;
 
+import com.webApp.springRESTfulWebApp.exceptions.customexceptions.ErrorMessageObject;
 import com.webApp.springRESTfulWebApp.exceptions.customexceptions.UserControllerException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -8,12 +9,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.Date;
+
 @ControllerAdvice
 public class AppExceptionHandler {
 
     @ExceptionHandler(value = {UserControllerException.class})
     public ResponseEntity<Object> handleUserControllerException(UserControllerException ex, WebRequest request) {
-        return new ResponseEntity<>(ex.getMessage(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+        ErrorMessageObject errorMessageObject = new ErrorMessageObject(new Date(), ex.getMessage());
+        return new ResponseEntity<>(errorMessageObject, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
