@@ -1,10 +1,10 @@
 package com.webApp.springRESTfulWebApp.ui.controllers;
 
 
-import com.webApp.springRESTfulWebApp.custom.exceptions.ErrorMessages;
-import com.webApp.springRESTfulWebApp.custom.exceptions.UserControllerException;
 import com.webApp.springRESTfulWebApp.dto.AddressDto;
 import com.webApp.springRESTfulWebApp.dto.UserDto;
+import com.webApp.springRESTfulWebApp.exceptions.customexceptions.UserControllerException;
+import com.webApp.springRESTfulWebApp.exceptions.messages.ErrorMessages;
 import com.webApp.springRESTfulWebApp.model.request.UserInformationRequestModel;
 import com.webApp.springRESTfulWebApp.model.response.AddressInformationResponseModel;
 import com.webApp.springRESTfulWebApp.model.response.UserInformationResponseModel;

@@ -1,4 +1,4 @@
-package com.webApp.springRESTfulWebApp.custom.exceptions;
+package com.webApp.springRESTfulWebApp.exceptions.messages;
 
 public enum ErrorMessages {
 

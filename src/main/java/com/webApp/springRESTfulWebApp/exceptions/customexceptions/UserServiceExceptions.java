@@ -1,4 +1,4 @@
-package com.webApp.springRESTfulWebApp.custom.exceptions;
+package com.webApp.springRESTfulWebApp.exceptions.customexceptions;
 
 public class UserServiceExceptions extends RuntimeException {
 
