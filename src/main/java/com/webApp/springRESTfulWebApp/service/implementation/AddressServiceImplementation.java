@@ -1,10 +1,10 @@
 package com.webApp.springRESTfulWebApp.service.implementation;
 
+import com.webApp.springRESTfulWebApp.dto.AddressDto;
 import com.webApp.springRESTfulWebApp.entityes.AddressEntity;
 import com.webApp.springRESTfulWebApp.entityes.UserEntity;
 import com.webApp.springRESTfulWebApp.repositories.UserRepository;
 import com.webApp.springRESTfulWebApp.service.interfaces.AddressService;
-import data.transfer.objects.AddressDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

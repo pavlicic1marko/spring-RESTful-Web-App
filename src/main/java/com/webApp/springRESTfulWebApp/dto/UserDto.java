@@ -1,4 +1,4 @@
-package data.transfer.objects;
+package com.webApp.springRESTfulWebApp.dto;
 
 import java.util.List;
 

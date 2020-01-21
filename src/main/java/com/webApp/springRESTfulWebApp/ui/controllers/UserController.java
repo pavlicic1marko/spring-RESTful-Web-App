@@ -1,14 +1,14 @@
 package com.webApp.springRESTfulWebApp.ui.controllers;
 
 
+import com.webApp.springRESTfulWebApp.dto.AddressDto;
+import com.webApp.springRESTfulWebApp.dto.UserDto;
 import com.webApp.springRESTfulWebApp.model.request.UserInformationRequestModel;
 import com.webApp.springRESTfulWebApp.model.response.AddressInformationResponseModel;
 import com.webApp.springRESTfulWebApp.model.response.UserInformationResponseModel;
 import com.webApp.springRESTfulWebApp.service.implementation.AddressServiceImplementation;
 import com.webApp.springRESTfulWebApp.service.implementation.UserServiceImplementation;
 import com.webApp.springRESTfulWebApp.shared.Utils;
-import data.transfer.objects.AddressDto;
-import data.transfer.objects.UserDto;
 import io.swagger.annotations.ApiOperation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

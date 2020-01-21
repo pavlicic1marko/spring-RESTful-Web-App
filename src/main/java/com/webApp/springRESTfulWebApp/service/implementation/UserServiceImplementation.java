@@ -1,10 +1,10 @@
 package com.webApp.springRESTfulWebApp.service.implementation;
 
+import com.webApp.springRESTfulWebApp.dto.AddressDto;
+import com.webApp.springRESTfulWebApp.dto.UserDto;
 import com.webApp.springRESTfulWebApp.entityes.UserEntity;
 import com.webApp.springRESTfulWebApp.repositories.UserRepository;
 import com.webApp.springRESTfulWebApp.service.interfaces.UserService;
-import data.transfer.objects.AddressDto;
-import data.transfer.objects.UserDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

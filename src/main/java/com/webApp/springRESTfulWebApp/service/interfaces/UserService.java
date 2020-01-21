@@ -1,6 +1,6 @@
 package com.webApp.springRESTfulWebApp.service.interfaces;
 
-import data.transfer.objects.UserDto;
+import com.webApp.springRESTfulWebApp.dto.UserDto;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;

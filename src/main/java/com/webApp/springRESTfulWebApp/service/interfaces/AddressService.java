@@ -1,7 +1,7 @@
 package com.webApp.springRESTfulWebApp.service.interfaces;
 
 
-import data.transfer.objects.AddressDto;
+import com.webApp.springRESTfulWebApp.dto.AddressDto;
 
 import java.util.List;
 

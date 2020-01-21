@@ -1,7 +1,7 @@
 package com.webApp.springRESTfulWebApp.ui.controllers;
 
+import com.webApp.springRESTfulWebApp.dto.UserDto;
 import com.webApp.springRESTfulWebApp.service.implementation.UserServiceImplementation;
-import data.transfer.objects.UserDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

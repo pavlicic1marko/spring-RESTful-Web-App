@@ -2,9 +2,9 @@ package com.webApp.springRESTfulWebApp.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webApp.springRESTfulWebApp.SpringApplicationContext;
+import com.webApp.springRESTfulWebApp.dto.UserDto;
 import com.webApp.springRESTfulWebApp.model.request.UserLoginRequestModel;
 import com.webApp.springRESTfulWebApp.service.interfaces.UserService;
-import data.transfer.objects.UserDto;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.AuthenticationManager;
