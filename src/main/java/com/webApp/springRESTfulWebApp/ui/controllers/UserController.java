@@ -1,6 +1,8 @@
 package com.webApp.springRESTfulWebApp.ui.controllers;
 
 
+import com.webApp.springRESTfulWebApp.custom.exceptions.ErrorMessages;
+import com.webApp.springRESTfulWebApp.custom.exceptions.UserControllerException;
 import com.webApp.springRESTfulWebApp.dto.AddressDto;
 import com.webApp.springRESTfulWebApp.dto.UserDto;
 import com.webApp.springRESTfulWebApp.model.request.UserInformationRequestModel;
@@ -60,6 +62,9 @@ public class UserController {
     @PostMapping
     public UserInformationResponseModel createUser(@RequestBody UserInformationRequestModel userInformation) {
         utils.checkUserData(userInformation);
+        if (userInformation.getAddresses() == null) {
+            throw new UserControllerException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+        }
         UserDto userDto = modelMapper.map(userInformation, UserDto.class);
         UserDto userDtoSavedData = userServiceImplementation.createUser(userDto);
         UserInformationResponseModel returnValue = modelMapper.map(userDtoSavedData, UserInformationResponseModel.class);
