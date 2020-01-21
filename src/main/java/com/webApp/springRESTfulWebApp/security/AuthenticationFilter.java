@@ -63,7 +63,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         String token = Jwts.builder()
                 .setSubject(userName)
                 .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS512, SecurityConstants.TOKEN_SECRET)// unique token secret makes the signature unique
+                .signWith(SignatureAlgorithm.HS512, SecurityConstants.getTokenSecret())// unique token secret makes the signature unique
                 .compact();
 
         res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);//add to the header of response, client needs to store it
