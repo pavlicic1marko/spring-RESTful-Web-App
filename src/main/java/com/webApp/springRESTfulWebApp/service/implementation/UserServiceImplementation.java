@@ -2,7 +2,7 @@ package com.webApp.springRESTfulWebApp.service.implementation;
 
 import com.webApp.springRESTfulWebApp.dto.AddressDto;
 import com.webApp.springRESTfulWebApp.dto.UserDto;
-import com.webApp.springRESTfulWebApp.entityes.UserEntity;
+import com.webApp.springRESTfulWebApp.entities.UserEntity;
 import com.webApp.springRESTfulWebApp.exceptions.customexceptions.UserServiceExceptions;
 import com.webApp.springRESTfulWebApp.exceptions.messages.ErrorMessages;
 import com.webApp.springRESTfulWebApp.repositories.UserRepository;
@@ -79,13 +79,11 @@ public class UserServiceImplementation implements UserService {
         for (int i = 0; i < userDto.getAddresses().size(); i++) {
             AddressDto address = userDto.getAddresses().get(i);
             address.setUserDetails(userDto);
-            address.setAddressId("test");
+            address.setAddressId(UUID.randomUUID().toString());
             userDto.getAddresses().set(i, address);
         }
         UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
-        UUID uuid = UUID.randomUUID();
-        String userId = uuid.toString();
-        userEntity.setUserId(userId);//TODO refactor 3 lines to one
+        userEntity.setUserId(UUID.randomUUID().toString());
         userEntity.setEncryptedPassWord(bCryptPasswordEncoder.encode(userDto.getPassword()));
         UserEntity savedUserEntity = userRepository.save(userEntity);
         return modelMapper.map(savedUserEntity, UserDto.class);

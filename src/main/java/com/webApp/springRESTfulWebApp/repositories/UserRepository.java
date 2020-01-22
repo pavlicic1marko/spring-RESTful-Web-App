@@ -1,6 +1,6 @@
 package com.webApp.springRESTfulWebApp.repositories;
 
-import com.webApp.springRESTfulWebApp.entityes.UserEntity;
+import com.webApp.springRESTfulWebApp.entities.UserEntity;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

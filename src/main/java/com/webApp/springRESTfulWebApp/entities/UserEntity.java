@@ -1,4 +1,4 @@
-package com.webApp.springRESTfulWebApp.entityes;
+package com.webApp.springRESTfulWebApp.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.LazyCollection;

@@ -89,7 +89,7 @@ public class UserController {
         return modelMapper.map(updatedValue, UserInformationResponseModel.class);
     }
 
-
+    @ApiOperation(value = "Get all addresses for user with provided id")
     @GetMapping(path = "/{id}/addresses")
     public List<AddressInformationResponseModel> getUserAddresses(@PathVariable("id") String id) {
         List<AddressDto> addressDtoList = addressServiceImplementation.getAddressesByUserId(id);
