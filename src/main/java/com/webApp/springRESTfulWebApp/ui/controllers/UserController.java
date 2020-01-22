@@ -11,6 +11,8 @@ import com.webApp.springRESTfulWebApp.model.response.UserInformationResponseMode
 import com.webApp.springRESTfulWebApp.service.implementation.AddressServiceImplementation;
 import com.webApp.springRESTfulWebApp.service.implementation.UserServiceImplementation;
 import com.webApp.springRESTfulWebApp.shared.Utils;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,7 @@ public class UserController {
     private Utils utils = new Utils();
 
 
-
+    @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "Bearer JWT Token", paramType = "header")})
     @ApiOperation(value = "Get information for multiple users Endpoint")
     @GetMapping
     public List<UserInformationResponseModel> getUsers(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "limit", defaultValue = "20") int limit) {
@@ -51,6 +53,7 @@ public class UserController {
         return userDetailsList;
     }
 
+    @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "Bearer JWT Token", paramType = "header")})
     @ApiOperation(value = "Get information for a single users Endpoint")
     @GetMapping(path = "/{userId}")
     public UserInformationResponseModel getUser(@PathVariable String userId) {
@@ -73,6 +76,7 @@ public class UserController {
 
     }
 
+    @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "Bearer JWT Token", paramType = "header")})
     @ApiOperation(value = "Delete a  user Endpoint")
     @DeleteMapping(path = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserInformationResponseModel deleteUser(@PathVariable String userId) {
@@ -80,6 +84,7 @@ public class UserController {
         return modelMapper.map(returnValue, UserInformationResponseModel.class);
     }
 
+    @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "Bearer JWT Token", paramType = "header")})
     @ApiOperation(value = "Update user information Endpoint")
     @PutMapping(path = "/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserInformationResponseModel updateUser(@PathVariable String userId, @RequestBody UserInformationRequestModel userInformation) {
@@ -89,6 +94,7 @@ public class UserController {
         return modelMapper.map(updatedValue, UserInformationResponseModel.class);
     }
 
+    @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "Bearer JWT Token", paramType = "header")})
     @ApiOperation(value = "Get all addresses for user with provided id")
     @GetMapping(path = "/{id}/addresses")
     public List<AddressInformationResponseModel> getUserAddresses(@PathVariable("id") String id) {
