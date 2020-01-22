@@ -2,6 +2,7 @@ package com.webApp.springRESTfulWebApp.ui.controllers;
 
 import com.webApp.springRESTfulWebApp.dto.UserDto;
 import com.webApp.springRESTfulWebApp.entityes.UserEntity;
+import com.webApp.springRESTfulWebApp.exceptions.customexceptions.UserServiceExceptions;
 import com.webApp.springRESTfulWebApp.repositories.UserRepository;
 import com.webApp.springRESTfulWebApp.service.implementation.UserServiceImplementation;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,8 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -48,5 +48,15 @@ public class UserControllerTest {
         assertEquals(email, userDto.getEmail());
         assertEquals(firstName, userDto.getFirstName());
         assertEquals(lastName, userDto.getLastName());
+    }
+
+    @Test
+    final void getUser_testUsernameNotFoundException() {
+        when(userRepository.findByUserId(anyString())).thenReturn(null);
+        assertThrows(UserServiceExceptions.class,
+                () -> userService.getUserByUserId("testId")
+        );
+
+
     }
 }

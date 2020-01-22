@@ -3,6 +3,8 @@ package com.webApp.springRESTfulWebApp.service.implementation;
 import com.webApp.springRESTfulWebApp.dto.AddressDto;
 import com.webApp.springRESTfulWebApp.dto.UserDto;
 import com.webApp.springRESTfulWebApp.entityes.UserEntity;
+import com.webApp.springRESTfulWebApp.exceptions.customexceptions.UserServiceExceptions;
+import com.webApp.springRESTfulWebApp.exceptions.messages.ErrorMessages;
 import com.webApp.springRESTfulWebApp.repositories.UserRepository;
 import com.webApp.springRESTfulWebApp.service.interfaces.UserService;
 import org.modelmapper.ModelMapper;
@@ -35,6 +37,9 @@ public class UserServiceImplementation implements UserService {
     @Override
     public UserDto getUserByUserId(String userId) {
         UserEntity userEntity = userRepository.findByUserId(userId);
+        if (userEntity == null) {
+            throw new UserServiceExceptions(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+        }
         return modelMapper.map(userEntity, UserDto.class);
     }
 
