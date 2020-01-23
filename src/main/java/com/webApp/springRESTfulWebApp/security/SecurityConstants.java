@@ -8,6 +8,7 @@ class SecurityConstants {
     static final String HEADER_STRING = "Authorization";
     static final String SIGN_UP_URL = "/users";
     static final String LOG_IN_URL = "/users/login";
+    static final String H2_CONSOLE = "/h2-console/**";
 
     //public static final String TOKEN_SECRET = "jf9i4jgu83nf10";
     static String getTokenSecret() {
