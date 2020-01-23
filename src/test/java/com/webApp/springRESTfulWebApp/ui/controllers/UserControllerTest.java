@@ -3,12 +3,15 @@ package com.webApp.springRESTfulWebApp.ui.controllers;
 
 import com.webApp.springRESTfulWebApp.dto.AddressDto;
 import com.webApp.springRESTfulWebApp.dto.UserDto;
+import com.webApp.springRESTfulWebApp.model.request.UserInformationRequestModel;
 import com.webApp.springRESTfulWebApp.model.response.UserInformationResponseModel;
 import com.webApp.springRESTfulWebApp.service.implementation.UserServiceImplementation;
+import com.webApp.springRESTfulWebApp.shared.Utils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
@@ -16,6 +19,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -28,6 +32,9 @@ public class UserControllerTest {
 
     @Mock
     UserServiceImplementation userServiceImplementation;
+
+    @Mock
+    Utils utils;
 
     private String email = "testemail@test.com";
     private String firstName = "Marko";
@@ -99,6 +106,21 @@ public class UserControllerTest {
         assertEquals(streetNumber, userInformation.getAddresses().get(0).getStreetNumber());
         assertEquals(addressType, userInformation.getAddresses().get(0).getAddressType());
         assertEquals(addressId, userInformation.getAddresses().get(0).getAddressId());
+    }
+
+    @Test
+    final void updateUser() {
+        Mockito.doNothing().when(utils).checkUserData(any(UserInformationRequestModel.class));
+        when(userServiceImplementation.updateUser(anyString(), any(UserDto.class))).thenReturn(userdto);
+        UserInformationRequestModel userInformationRequestModel = new UserInformationRequestModel();
+        userInformationRequestModel.setFirstName(firstName);
+        userInformationRequestModel.setEmail(email);
+        userInformationRequestModel.setLastName(lastName);
+        UserInformationResponseModel userInformation = userController.updateUser(userId, userInformationRequestModel);
+        assertNotNull(userInformation);
+        assertEquals(email, userInformation.getEmail());
+        assertEquals(firstName, userInformation.getFirstName());
+        assertEquals(lastName, userInformation.getLastName());
     }
 
 
