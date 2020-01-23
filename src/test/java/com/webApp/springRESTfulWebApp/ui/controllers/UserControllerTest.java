@@ -78,7 +78,27 @@ public class UserControllerTest {
         assertEquals(lastName, userInformation.getLastName());
         assertEquals(userdto.getAddresses().size(), userInformation.getAddresses().size());
         assertEquals(city, userInformation.getAddresses().get(0).getCity());
+        assertEquals(streetName, userInformation.getAddresses().get(0).getStreetName());
+        assertEquals(streetNumber, userInformation.getAddresses().get(0).getStreetNumber());
+        assertEquals(addressType, userInformation.getAddresses().get(0).getAddressType());
+        assertEquals(addressId, userInformation.getAddresses().get(0).getAddressId());
 
+    }
+
+    @Test
+    final void deleteUser() {
+        when(userServiceImplementation.deleteUser(anyString())).thenReturn(userdto);
+        UserInformationResponseModel userInformation = userController.deleteUser(userId);
+        assertNotNull(userInformation);
+        assertEquals(email, userInformation.getEmail());
+        assertEquals(firstName, userInformation.getFirstName());
+        assertEquals(lastName, userInformation.getLastName());
+        assertEquals(userdto.getAddresses().size(), userInformation.getAddresses().size());
+        assertEquals(city, userInformation.getAddresses().get(0).getCity());
+        assertEquals(streetName, userInformation.getAddresses().get(0).getStreetName());
+        assertEquals(streetNumber, userInformation.getAddresses().get(0).getStreetNumber());
+        assertEquals(addressType, userInformation.getAddresses().get(0).getAddressType());
+        assertEquals(addressId, userInformation.getAddresses().get(0).getAddressId());
     }
 
 
