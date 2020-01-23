@@ -3,8 +3,12 @@ package com.webApp.springRESTfulWebApp.ui.controllers;
 
 import com.webApp.springRESTfulWebApp.dto.AddressDto;
 import com.webApp.springRESTfulWebApp.dto.UserDto;
+import com.webApp.springRESTfulWebApp.exceptions.customexceptions.UserControllerException;
+import com.webApp.springRESTfulWebApp.model.request.AddressInformationRequestModel;
 import com.webApp.springRESTfulWebApp.model.request.UserInformationRequestModel;
+import com.webApp.springRESTfulWebApp.model.response.AddressInformationResponseModel;
 import com.webApp.springRESTfulWebApp.model.response.UserInformationResponseModel;
+import com.webApp.springRESTfulWebApp.service.implementation.AddressServiceImplementation;
 import com.webApp.springRESTfulWebApp.service.implementation.UserServiceImplementation;
 import com.webApp.springRESTfulWebApp.shared.Utils;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,8 +21,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -36,11 +39,14 @@ public class UserControllerTest {
     @Mock
     Utils utils;
 
+    @Mock
+    AddressServiceImplementation addressServiceImplementation;
+
+
     private String email = "testemail@test.com";
     private String firstName = "Marko";
     private String lastName = "Pavlicic";
     private String userId = "testID";
-    private String password = "1234";
 
     private String streetNumber = "12";
     private String streetName = "1st";
@@ -50,6 +56,10 @@ public class UserControllerTest {
 
     private AddressDto addressDto;
     private UserDto userdto;
+    private UserInformationRequestModel userInformationRequestModel;
+    private AddressInformationRequestModel addressInformationRequestModel = new AddressInformationRequestModel();
+    private List<AddressInformationRequestModel> addressInformationRequestModels = new ArrayList<>();
+
     private List<AddressDto> addressDtoList = new ArrayList<>();
 
     @BeforeEach
@@ -69,8 +79,23 @@ public class UserControllerTest {
         userdto.setFirstName(firstName);
         userdto.setEmail(email);
         userdto.setLastName(lastName);
-        userdto.setPassword(password);
         userdto.setUserId(userId);
+
+        userInformationRequestModel = new UserInformationRequestModel();
+        userInformationRequestModel.setFirstName(firstName);
+        userInformationRequestModel.setEmail(email);
+        userInformationRequestModel.setLastName(lastName);
+
+
+        addressInformationRequestModel.setStreetNumber(streetNumber);
+        addressInformationRequestModel.setStreetName(streetName);
+        addressInformationRequestModel.setCity(city);
+        addressInformationRequestModel.setAddressType(addressType);
+        addressInformationRequestModel.setAddressId(addressId);
+        addressInformationRequestModels.add(0, addressInformationRequestModel);
+        userInformationRequestModel.setAddresses(addressInformationRequestModels);
+
+
 
     }
 
@@ -112,15 +137,59 @@ public class UserControllerTest {
     final void updateUser() {
         Mockito.doNothing().when(utils).checkUserData(any(UserInformationRequestModel.class));
         when(userServiceImplementation.updateUser(anyString(), any(UserDto.class))).thenReturn(userdto);
-        UserInformationRequestModel userInformationRequestModel = new UserInformationRequestModel();
-        userInformationRequestModel.setFirstName(firstName);
-        userInformationRequestModel.setEmail(email);
-        userInformationRequestModel.setLastName(lastName);
         UserInformationResponseModel userInformation = userController.updateUser(userId, userInformationRequestModel);
         assertNotNull(userInformation);
         assertEquals(email, userInformation.getEmail());
         assertEquals(firstName, userInformation.getFirstName());
         assertEquals(lastName, userInformation.getLastName());
+        assertEquals(userInformationRequestModel.getAddresses().size(), userInformation.getAddresses().size());
+        assertEquals(city, userInformation.getAddresses().get(0).getCity());
+        assertEquals(streetName, userInformation.getAddresses().get(0).getStreetName());
+        assertEquals(streetNumber, userInformation.getAddresses().get(0).getStreetNumber());
+        assertEquals(addressType, userInformation.getAddresses().get(0).getAddressType());
+        assertEquals(addressId, userInformation.getAddresses().get(0).getAddressId());
+    }
+
+    @Test
+    final void createUser() {
+        Mockito.doNothing().when(utils).checkUserData(any(UserInformationRequestModel.class));
+        when(userServiceImplementation.createUser(any(UserDto.class))).thenReturn(userdto);
+        UserInformationResponseModel userInformation = userController.createUser(userInformationRequestModel);
+        assertNotNull(userInformation);
+        assertEquals(email, userInformation.getEmail());
+        assertEquals(firstName, userInformation.getFirstName());
+        assertEquals(lastName, userInformation.getLastName());
+        assertEquals(userInformationRequestModel.getAddresses().size(), userInformation.getAddresses().size());
+        assertEquals(city, userInformation.getAddresses().get(0).getCity());
+        assertEquals(streetName, userInformation.getAddresses().get(0).getStreetName());
+        assertEquals(streetNumber, userInformation.getAddresses().get(0).getStreetNumber());
+        assertEquals(addressType, userInformation.getAddresses().get(0).getAddressType());
+        assertEquals(addressId, userInformation.getAddresses().get(0).getAddressId());
+    }
+
+    @Test
+    final void createUser_testUserControllerException() {
+        Mockito.doNothing().when(utils).checkUserData(any(UserInformationRequestModel.class));
+        userInformationRequestModel.setAddresses(null);
+        assertThrows(UserControllerException.class,
+                () -> userController.createUser(userInformationRequestModel)
+        );
+
+    }
+
+    @Test
+    final void getUserAddresses() {
+        when(addressServiceImplementation.getAddressesByUserId(anyString())).thenReturn(addressDtoList);
+        List<AddressInformationResponseModel> addressList = userController.getUserAddresses(addressId);
+        assertNotNull(addressList);
+        assertEquals(addressDtoList.size(), addressList.size());
+        assertEquals(city, addressList.get(0).getCity());
+        assertEquals(streetName, addressList.get(0).getStreetName());
+        assertEquals(streetNumber, addressList.get(0).getStreetNumber());
+        assertEquals(addressType, addressList.get(0).getAddressType());
+        assertEquals(addressId, addressList.get(0).getAddressId());
+
+
     }
 
 
