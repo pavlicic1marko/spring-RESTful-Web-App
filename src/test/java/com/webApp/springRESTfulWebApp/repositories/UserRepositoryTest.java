@@ -43,7 +43,7 @@ class UserRepositoryTest {
 
     @Test
     final void GetUserWhereEmailIsEqualToTestEmail() {
-        UserEntity entity = userRepository.findAllUsersWhereEmailEqualsToTesTEmail();
+        UserEntity entity = userRepository.findAllUsersWhereEmailEqualsToTesTEmail(email);
         assertNotNull(entity);
         assertEquals(email, entity.getEmail());
         assertEquals(firstName, entity.getFirstName());
