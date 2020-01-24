@@ -6,6 +6,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -19,12 +20,16 @@ public class UserEntity implements Serializable {
 
     @Column(nullable = false, length = 50)
     private String userId;
+
     @Column(nullable = false, length = 50)
     private String firstName;
+
     @Column(nullable = false, length = 50)
     private String lastName;
+
     @Column(nullable = false, length = 50, unique = true)
     private String email;
+
     @Column(nullable = false, length = 200)
     private String encryptedPassWord;
 
@@ -32,6 +37,13 @@ public class UserEntity implements Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "userDetails", cascade = CascadeType.ALL)
     private List<AddressEntity> addresses;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+    //if a user is deleted we do not want a role to be deleted (PERSIST)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "users_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Collection<RoleEntity> roles;
 
     public String getUserId() {
         return userId;
