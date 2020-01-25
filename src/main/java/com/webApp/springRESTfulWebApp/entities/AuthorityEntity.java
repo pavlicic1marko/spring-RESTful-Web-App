@@ -8,6 +8,13 @@ import java.util.Collection;
 @Table(name = "authorities")
 public class AuthorityEntity implements Serializable {
 
+    public AuthorityEntity(String name) {
+        this.name = name;
+    }
+
+    public AuthorityEntity() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
