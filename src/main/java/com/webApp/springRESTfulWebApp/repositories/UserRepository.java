@@ -12,7 +12,13 @@ public interface UserRepository extends PagingAndSortingRepository<UserEntity, L
 
     UserEntity findByEmail(String email);
 
+    //Native SQL Queries
     @Query(value = "select * from User_entity u where u.email=:email",
             nativeQuery = true)
     UserEntity findAllUsersWhereEmailEqualsToTesTEmail(@Param("email") String email);
+
+
+    //JPQL Java Persistence Query Language
+    @Query("select user from UserEntity user where user.userId=:userId")
+    UserEntity findUserEntityByUserId(@Param("userId") String userId);
 }

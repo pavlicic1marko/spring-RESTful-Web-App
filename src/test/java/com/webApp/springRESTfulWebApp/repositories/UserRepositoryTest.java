@@ -52,4 +52,17 @@ class UserRepositoryTest {
         assertEquals(userID, entity.getUserId());
 
     }
+
+    @Test
+    final void findUserEntityByUserId() {
+        UserEntity entity = userRepository.findUserEntityByUserId(userID);
+        assertNotNull(entity);
+        assertEquals(email, entity.getEmail());
+        assertEquals(firstName, entity.getFirstName());
+        assertEquals(lastName, entity.getLastName());
+        assertEquals(encryptedPassword, entity.getEncryptedPassWord());
+        assertEquals(userID, entity.getUserId());
+
+
+    }
 }

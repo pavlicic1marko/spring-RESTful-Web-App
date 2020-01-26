@@ -10,8 +10,15 @@ public class RoleEntity implements Serializable {
 
     private static final long serialVersionUID = 8884534222345334538L;
 
+    public RoleEntity(String name) {
+        this.name = name;
+    }
+
+    public RoleEntity() {
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column(nullable = false, length = 50)
