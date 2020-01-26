@@ -29,7 +29,7 @@ class UserRepositoryTest {
 
     @BeforeEach
     void SetUp() {
-        //Create a User Entity
+        //Create a User Entity and save it
         userEntity = new UserEntity();
         userEntity.setEmail(email);
         userEntity.setFirstName(firstName);
@@ -62,6 +62,17 @@ class UserRepositoryTest {
         assertEquals(lastName, entity.getLastName());
         assertEquals(encryptedPassword, entity.getEncryptedPassWord());
         assertEquals(userID, entity.getUserId());
+
+
+    }
+
+    @Test
+    final void updateUserEntityFirstName() {
+        String newFirstName = "Json";
+        userRepository.updateUserEntityFirstName(newFirstName, userID);
+        UserEntity entity = userRepository.findUserEntityByUserId(userID);
+        assertNotNull(entity);
+        assertEquals(newFirstName, entity.getFirstName());
 
 
     }
