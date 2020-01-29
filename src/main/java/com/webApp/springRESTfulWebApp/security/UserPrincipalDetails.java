@@ -16,8 +16,11 @@ public class UserPrincipalDetails implements UserDetails {
 
     private UserEntity userEntity;
 
+    private String userId;
+
     public UserPrincipalDetails(UserEntity userEntity) {
         this.userEntity =userEntity;
+        this.userId = userEntity.getUserId();
     }
 
     @Override
@@ -70,5 +73,13 @@ public class UserPrincipalDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }
