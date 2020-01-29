@@ -6,6 +6,7 @@ import com.webApp.springRESTfulWebApp.entities.UserEntity;
 import com.webApp.springRESTfulWebApp.exceptions.customexceptions.UserServiceExceptions;
 import com.webApp.springRESTfulWebApp.exceptions.messages.ErrorMessages;
 import com.webApp.springRESTfulWebApp.repositories.UserRepository;
+import com.webApp.springRESTfulWebApp.security.UserPrincipalDetails;
 import com.webApp.springRESTfulWebApp.service.interfaces.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,6 +105,7 @@ public class UserServiceImplementation implements UserService {
         if (userEntity == null) {
             throw new UsernameNotFoundException(email);
         }
-        return new User(userEntity.getEmail(), userEntity.getEncryptedPassWord(), new ArrayList<>());
+        return new UserPrincipalDetails(userEntity);
+        //return new User(userEntity.getEmail(), userEntity.getEncryptedPassWord(), new ArrayList<>());
     }
 }
