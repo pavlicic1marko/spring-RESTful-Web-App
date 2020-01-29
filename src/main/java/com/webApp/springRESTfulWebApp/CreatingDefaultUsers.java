@@ -49,7 +49,7 @@ public class CreatingDefaultUsers {
         adminUser.setFirstName("admin");
         adminUser.setLastName("user");
         adminUser.setEncryptedPassWord(bCryptPasswordEncoder.encode("1234"));
-        adminUser.setUserId(UUID.randomUUID().toString());
+        adminUser.setUserId("0375a9e2-ceed-4912-a9f8-6112c0a4925e");
         adminUser.setRoles(Arrays.asList(roleAdmin));
         userRepository.save(adminUser);
 
@@ -59,7 +59,7 @@ public class CreatingDefaultUsers {
         regularUser.setFirstName("regular");
         regularUser.setLastName("user");
         regularUser.setEncryptedPassWord(bCryptPasswordEncoder.encode("1234"));
-        regularUser.setUserId(UUID.randomUUID().toString());
+        regularUser.setUserId("694aeba3-e1e5-4bd5-9d7e-4ef2e7f1fa3d");
         regularUser.setRoles(Arrays.asList(roleUser));
         userRepository.save(regularUser);
 
