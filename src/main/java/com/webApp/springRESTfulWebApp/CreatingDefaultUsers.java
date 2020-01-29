@@ -48,10 +48,20 @@ public class CreatingDefaultUsers {
         adminUser.setEmail("adminUser@mail.com");
         adminUser.setFirstName("admin");
         adminUser.setLastName("user");
-        adminUser.setEncryptedPassWord(bCryptPasswordEncoder.encode("admin"));
+        adminUser.setEncryptedPassWord(bCryptPasswordEncoder.encode("1234"));
         adminUser.setUserId(UUID.randomUUID().toString());
         adminUser.setRoles(Arrays.asList(roleAdmin));
         userRepository.save(adminUser);
+
+        if(roleUser==null) return;
+        UserEntity regularUser = new UserEntity();
+        regularUser.setEmail("regularUser@mail.com");
+        regularUser.setFirstName("regular");
+        regularUser.setLastName("user");
+        regularUser.setEncryptedPassWord(bCryptPasswordEncoder.encode("1234"));
+        regularUser.setUserId(UUID.randomUUID().toString());
+        regularUser.setRoles(Arrays.asList(roleUser));
+        userRepository.save(regularUser);
 
     }
 
