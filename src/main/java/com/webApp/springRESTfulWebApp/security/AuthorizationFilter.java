@@ -1,6 +1,9 @@
 package com.webApp.springRESTfulWebApp.security;
 
+import com.webApp.springRESTfulWebApp.entities.UserEntity;
+import com.webApp.springRESTfulWebApp.repositories.UserRepository;
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,8 +18,11 @@ import java.util.ArrayList;
 
 public class AuthorizationFilter extends BasicAuthenticationFilter {
 
-    public AuthorizationFilter(AuthenticationManager authManager) {
+    private final UserRepository userRepository;
+
+    public AuthorizationFilter(AuthenticationManager authManager,UserRepository userRepository) {
         super(authManager);
+        this.userRepository=userRepository;
     }
 
     @Override
@@ -47,7 +53,9 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
                     .getSubject();
 
             if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+                UserEntity userEntity =userRepository.findByEmail(user);
+                UserPrincipalDetails userPrincipalDetails = new UserPrincipalDetails(userEntity);
+                return new UsernamePasswordAuthenticationToken(user, null, userPrincipalDetails.getAuthorities());
             }
 
             return null;
