@@ -95,6 +95,7 @@ public class UserServiceImplementation implements UserService {
         RoleEntity roleEntity = roleRepository.findByName(Roles.ROLE_USER.name());
         roleEntities.add(roleEntity);
         userEntity.setRoles(roleEntities);
+        userEntity.setDateCreated(new Date());
 
 
         UserEntity savedUserEntity = userRepository.save(userEntity);

@@ -7,6 +7,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -32,6 +33,9 @@ public class UserEntity implements Serializable {
 
     @Column(nullable = false, length = 200)
     private String encryptedPassWord;
+
+    @Column(length = 200)
+    private Date dateCreated;
 
     @JsonManagedReference
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -91,6 +95,14 @@ public class UserEntity implements Serializable {
 
     public void setEncryptedPassWord(String encryptedPassWord) {
         this.encryptedPassWord = encryptedPassWord;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     public List<AddressEntity> getAddresses() {
