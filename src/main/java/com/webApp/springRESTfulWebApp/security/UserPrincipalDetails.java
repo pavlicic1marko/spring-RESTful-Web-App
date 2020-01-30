@@ -14,6 +14,8 @@ import java.util.List;
 
 public class UserPrincipalDetails implements UserDetails {
 
+    private static final long serialVersionUID = 8629191213156914336L;
+
     private UserEntity userEntity;
 
     private String userId;

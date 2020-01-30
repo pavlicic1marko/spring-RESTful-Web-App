@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 @Component
-public class CreatingDefaultUsers {
+public class InitializingDefaultUsers {
 
     @Autowired
     private AuthorityRepository authorityRepository;

@@ -8,6 +8,8 @@ import java.util.Collection;
 @Table(name = "authorities")
 public class AuthorityEntity implements Serializable {
 
+    private static final long serialVersionUID = -736480279640972181L;
+
     public AuthorityEntity(String name) {
         this.name = name;
     }
