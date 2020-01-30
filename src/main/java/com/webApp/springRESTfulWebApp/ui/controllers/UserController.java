@@ -18,6 +18,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,6 +56,7 @@ public class UserController {
         return userDetailsList;
     }
 
+    @PostAuthorize("hasRole('ADMIN') or returnObject.email==principal.username")
     @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "${userController.authorizationHeader.description}", paramType = "header")})
     @ApiOperation(value = "Get information for a single users Endpoint")
     @GetMapping(path = "/{userId}")
