@@ -3,6 +3,7 @@ package com.webApp.springRESTfulWebApp.service.implementation;
 import com.webApp.springRESTfulWebApp.dto.AddressDto;
 import com.webApp.springRESTfulWebApp.entities.AddressEntity;
 import com.webApp.springRESTfulWebApp.entities.UserEntity;
+import com.webApp.springRESTfulWebApp.repositories.AddressRepository;
 import com.webApp.springRESTfulWebApp.repositories.UserRepository;
 import com.webApp.springRESTfulWebApp.service.interfaces.AddressService;
 import org.modelmapper.ModelMapper;
@@ -18,6 +19,9 @@ public class AddressServiceImplementation implements AddressService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AddressRepository addressRepository;
+
     private ModelMapper modelMapper = new ModelMapper();
 
     @Override
@@ -27,5 +31,11 @@ public class AddressServiceImplementation implements AddressService {
         List<AddressDto> addressDtoList = new ArrayList<>();
         addressEntitiesList.forEach(address -> addressDtoList.add(modelMapper.map(address, AddressDto.class)));
         return addressDtoList;
+    }
+
+    @Override
+    public AddressDto getAddressByAddressId(String addressId) {
+        AddressEntity addressEntity = addressRepository.findByAddressId(addressId);
+        return modelMapper.map(addressEntity,AddressDto.class);
     }
 }
