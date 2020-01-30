@@ -38,8 +38,6 @@ public class UserController {
 
     private ModelMapper modelMapper = new ModelMapper();
 
-    private Utils utils = new Utils();
-
     @GetMapping
     @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "${userController.authorizationHeader.description}", paramType = "header")})
     @ApiOperation(value = "Get information for multiple users Endpoint")
@@ -67,7 +65,6 @@ public class UserController {
     @PostMapping
     @ApiOperation(value = "Create a new user Endpoint")
     public UserInformationResponseModel createUser(@RequestBody UserInformationRequestModel userInformation) {
-        utils.checkUserData(userInformation);
         if (userInformation.getAddresses() == null) {
             throw new UserControllerException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
@@ -93,7 +90,6 @@ public class UserController {
     @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "${userController.authorizationHeader.description}", paramType = "header")})
     @ApiOperation(value = "Update user information Endpoint")
     public UserInformationResponseModel updateUser(@PathVariable String userId, @RequestBody UserInformationRequestModel userInformation) {
-        utils.checkUserData(userInformation);
         UserDto userDto = modelMapper.map(userInformation, UserDto.class);
         UserDto updatedValue = userServiceImplementation.updateUser(userId, userDto);
         return modelMapper.map(updatedValue, UserInformationResponseModel.class);

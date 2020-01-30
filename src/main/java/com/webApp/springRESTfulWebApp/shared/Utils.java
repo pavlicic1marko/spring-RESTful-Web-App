@@ -1,11 +1,19 @@
 package com.webApp.springRESTfulWebApp.shared;
 
+import com.webApp.springRESTfulWebApp.dto.UserDto;
 import com.webApp.springRESTfulWebApp.model.request.UserInformationRequestModel;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class Utils {
-    public void checkUserData(UserInformationRequestModel userInformation) {
-        if (userInformation.getEmail().isEmpty() || userInformation.getFirstName().isEmpty() || userInformation.getLastName().isEmpty()) {
+    public void checkUserData(UserDto userDto) {
+        if (userDto.getEmail().isEmpty() || userDto.getFirstName().isEmpty() || userDto.getLastName().isEmpty()) {
             throw new RuntimeException("email, first name and last name must not be empty");
         }
+    }
+
+    public void formatUserData(UserDto userDto){
+        userDto.setEmail(userDto.getEmail().toLowerCase().trim());
     }
 }

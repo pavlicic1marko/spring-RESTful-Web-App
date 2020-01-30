@@ -11,6 +11,7 @@ import com.webApp.springRESTfulWebApp.repositories.UserRepository;
 import com.webApp.springRESTfulWebApp.security.Roles;
 import com.webApp.springRESTfulWebApp.security.UserPrincipalDetails;
 import com.webApp.springRESTfulWebApp.service.interfaces.UserService;
+import com.webApp.springRESTfulWebApp.shared.Utils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,9 @@ public class UserServiceImplementation implements UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    Utils utils;
 
     private ModelMapper modelMapper = new ModelMapper();
 
@@ -61,6 +65,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public UserDto updateUser(String userId, UserDto userDto) {
+        utils.checkUserData(userDto);
         UserEntity userEntity = userRepository.findByUserId(userId);
         userEntity.setEmail(userDto.getEmail());
         userEntity.setFirstName(userDto.getFirstName());
@@ -87,6 +92,8 @@ public class UserServiceImplementation implements UserService {
             address.setAddressId(UUID.randomUUID().toString());
             userDto.getAddresses().set(i, address);
         }
+        utils.checkUserData(userDto);
+        utils.formatUserData(userDto);
         UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
         userEntity.setUserId(UUID.randomUUID().toString());
         userEntity.setEncryptedPassWord(bCryptPasswordEncoder.encode(userDto.getPassword()));

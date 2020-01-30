@@ -135,7 +135,6 @@ public class UserControllerTest {
 
     @Test
     final void updateUser() {
-        Mockito.doNothing().when(utils).checkUserData(any(UserInformationRequestModel.class));
         when(userServiceImplementation.updateUser(anyString(), any(UserDto.class))).thenReturn(userdto);
         UserInformationResponseModel userInformation = userController.updateUser(userId, userInformationRequestModel);
         assertNotNull(userInformation);
@@ -152,7 +151,6 @@ public class UserControllerTest {
 
     @Test
     final void createUser() {
-        Mockito.doNothing().when(utils).checkUserData(any(UserInformationRequestModel.class));
         when(userServiceImplementation.createUser(any(UserDto.class))).thenReturn(userdto);
         UserInformationResponseModel userInformation = userController.createUser(userInformationRequestModel);
         assertNotNull(userInformation);
@@ -169,7 +167,6 @@ public class UserControllerTest {
 
     @Test
     final void createUser_testUserControllerException() {
-        Mockito.doNothing().when(utils).checkUserData(any(UserInformationRequestModel.class));
         userInformationRequestModel.setAddresses(null);
         assertThrows(UserControllerException.class,
                 () -> userController.createUser(userInformationRequestModel)
