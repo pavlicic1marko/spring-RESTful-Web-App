@@ -2,9 +2,11 @@ package com.webApp.springRESTfulWebApp.service.implementation;
 
 import com.webApp.springRESTfulWebApp.dto.AddressDto;
 import com.webApp.springRESTfulWebApp.dto.UserDto;
+import com.webApp.springRESTfulWebApp.entities.RoleEntity;
 import com.webApp.springRESTfulWebApp.entities.UserEntity;
 import com.webApp.springRESTfulWebApp.exceptions.customexceptions.UserServiceExceptions;
 import com.webApp.springRESTfulWebApp.exceptions.messages.ErrorMessages;
+import com.webApp.springRESTfulWebApp.repositories.RoleRepository;
 import com.webApp.springRESTfulWebApp.repositories.UserRepository;
 import com.webApp.springRESTfulWebApp.security.UserPrincipalDetails;
 import com.webApp.springRESTfulWebApp.service.interfaces.UserService;
@@ -19,9 +21,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserServiceImplementation implements UserService {
@@ -31,6 +31,9 @@ public class UserServiceImplementation implements UserService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     private ModelMapper modelMapper = new ModelMapper();
 
@@ -86,6 +89,13 @@ public class UserServiceImplementation implements UserService {
         UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
         userEntity.setUserId(UUID.randomUUID().toString());
         userEntity.setEncryptedPassWord(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        
+        Collection<RoleEntity> roleEntities = new HashSet<>();
+        RoleEntity roleEntity = roleRepository.findByName("ROLE_USER");
+        roleEntities.add(roleEntity);
+        userEntity.setRoles(roleEntities);
+
+
         UserEntity savedUserEntity = userRepository.save(userEntity);
         return modelMapper.map(savedUserEntity, UserDto.class);
     }
