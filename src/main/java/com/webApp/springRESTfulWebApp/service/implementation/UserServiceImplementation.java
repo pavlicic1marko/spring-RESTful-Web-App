@@ -8,6 +8,7 @@ import com.webApp.springRESTfulWebApp.exceptions.customexceptions.UserServiceExc
 import com.webApp.springRESTfulWebApp.exceptions.messages.ErrorMessages;
 import com.webApp.springRESTfulWebApp.repositories.RoleRepository;
 import com.webApp.springRESTfulWebApp.repositories.UserRepository;
+import com.webApp.springRESTfulWebApp.security.Roles;
 import com.webApp.springRESTfulWebApp.security.UserPrincipalDetails;
 import com.webApp.springRESTfulWebApp.service.interfaces.UserService;
 import org.modelmapper.ModelMapper;
@@ -91,7 +92,7 @@ public class UserServiceImplementation implements UserService {
         userEntity.setEncryptedPassWord(bCryptPasswordEncoder.encode(userDto.getPassword()));
         
         Collection<RoleEntity> roleEntities = new HashSet<>();
-        RoleEntity roleEntity = roleRepository.findByName("ROLE_USER");
+        RoleEntity roleEntity = roleRepository.findByName(Roles.ROLE_USER.name());
         roleEntities.add(roleEntity);
         userEntity.setRoles(roleEntities);
 

@@ -6,6 +6,8 @@ import com.webApp.springRESTfulWebApp.entities.UserEntity;
 import com.webApp.springRESTfulWebApp.repositories.AuthorityRepository;
 import com.webApp.springRESTfulWebApp.repositories.RoleRepository;
 import com.webApp.springRESTfulWebApp.repositories.UserRepository;
+import com.webApp.springRESTfulWebApp.security.Authorities;
+import com.webApp.springRESTfulWebApp.security.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -35,12 +37,12 @@ public class CreatingDefaultUsers {
     @Transactional
     @EventListener
     public void onApplicationReadyEvent(ApplicationReadyEvent event) {
-        AuthorityEntity readAuthority = createAuthority("READ_AUTHORITY");
-        AuthorityEntity writeAuthority = createAuthority("WRITE_AUTHORITY");
-        AuthorityEntity deleteAuthority = createAuthority("DELETE_AUTHORITY");
+        AuthorityEntity readAuthority = createAuthority(Authorities.READ_AUTHORITY.name());
+        AuthorityEntity writeAuthority = createAuthority(Authorities.WRITE_AUTHORITY.name());
+        AuthorityEntity deleteAuthority = createAuthority(Authorities.DELETE_AUTHORITY.name());
 
-        RoleEntity roleUser = createRole("ROLE_USER", Arrays.asList(readAuthority, writeAuthority));
-        RoleEntity roleAdmin = createRole("ROLE_ADMIN", Arrays.asList(readAuthority, writeAuthority, deleteAuthority));
+        RoleEntity roleUser = createRole(Roles.ROLE_USER.name(), Arrays.asList(readAuthority, writeAuthority));
+        RoleEntity roleAdmin = createRole(Roles.ROLE_ADMIN.name(), Arrays.asList(readAuthority, writeAuthority, deleteAuthority));
 
         if(roleAdmin == null) return;
         UserEntity adminUser = new UserEntity();
