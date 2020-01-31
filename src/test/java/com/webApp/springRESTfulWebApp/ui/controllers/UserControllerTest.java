@@ -2,6 +2,7 @@ package com.webApp.springRESTfulWebApp.ui.controllers;
 
 
 import com.webApp.springRESTfulWebApp.dto.AddressDto;
+import com.webApp.springRESTfulWebApp.dto.UpdateUserDto;
 import com.webApp.springRESTfulWebApp.dto.UserDto;
 import com.webApp.springRESTfulWebApp.exceptions.customexceptions.UserControllerException;
 import com.webApp.springRESTfulWebApp.model.request.AddressInformationRequestModel;
@@ -15,7 +16,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
@@ -56,6 +56,7 @@ public class UserControllerTest {
 
     private AddressDto addressDto;
     private UserDto userdto;
+    private UpdateUserDto updateUserDto;
     private UserInformationRequestModel userInformationRequestModel;
     private AddressInformationRequestModel addressInformationRequestModel = new AddressInformationRequestModel();
     private List<AddressInformationRequestModel> addressInformationRequestModels = new ArrayList<>();
@@ -80,6 +81,13 @@ public class UserControllerTest {
         userdto.setEmail(email);
         userdto.setLastName(lastName);
         userdto.setUserId(userId);
+
+        updateUserDto =  new UpdateUserDto();
+        updateUserDto.setAddresses(addressDtoList);
+        updateUserDto.setFirstName(firstName);
+        updateUserDto.setEmail(email);
+        updateUserDto.setLastName(lastName);
+        updateUserDto.setUserId(userId);
 
         userInformationRequestModel = new UserInformationRequestModel();
         userInformationRequestModel.setFirstName(firstName);
@@ -135,7 +143,7 @@ public class UserControllerTest {
 
     @Test
     final void updateUser() {
-        when(userServiceImplementation.updateUser(anyString(), any(UserDto.class))).thenReturn(userdto);
+        when(userServiceImplementation.updateUser(anyString(), any(UserDto.class))).thenReturn(updateUserDto);
         UserInformationResponseModel userInformation = userController.updateUser(userId, userInformationRequestModel);
         assertNotNull(userInformation);
         assertEquals(email, userInformation.getEmail());

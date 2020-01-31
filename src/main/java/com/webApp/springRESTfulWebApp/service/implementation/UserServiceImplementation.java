@@ -1,6 +1,7 @@
 package com.webApp.springRESTfulWebApp.service.implementation;
 
 import com.webApp.springRESTfulWebApp.dto.AddressDto;
+import com.webApp.springRESTfulWebApp.dto.UpdateUserDto;
 import com.webApp.springRESTfulWebApp.dto.UserDto;
 import com.webApp.springRESTfulWebApp.entities.AddressEntity;
 import com.webApp.springRESTfulWebApp.entities.RoleEntity;
@@ -10,9 +11,12 @@ import com.webApp.springRESTfulWebApp.exceptions.messages.ErrorMessages;
 import com.webApp.springRESTfulWebApp.repositories.RoleRepository;
 import com.webApp.springRESTfulWebApp.repositories.UserRepository;
 import com.webApp.springRESTfulWebApp.security.Roles;
+import com.webApp.springRESTfulWebApp.security.SecurityConstants;
 import com.webApp.springRESTfulWebApp.security.UserPrincipalDetails;
 import com.webApp.springRESTfulWebApp.service.interfaces.UserService;
 import com.webApp.springRESTfulWebApp.shared.Utils;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -64,15 +68,28 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public UserDto updateUser(String userId, UserDto userDto) {
+    public UpdateUserDto updateUser(String userId, UserDto userDto) {
         utils.checkUserData(userDto);
         UserEntity userEntity = userRepository.findByUserId(userId);
+        String oldEmail = userEntity.getEmail();
         userEntity.setEmail(userDto.getEmail());
         userEntity.setFirstName(userDto.getFirstName());
         userEntity.setLastName(userDto.getLastName());
         userEntity.setEncryptedPassWord(bCryptPasswordEncoder.encode(userDto.getPassword()));
         UserEntity updatedUserEntity = userRepository.save(userEntity);
-        return modelMapper.map(updatedUserEntity, UserDto.class);
+
+        UpdateUserDto returnValue= modelMapper.map(updatedUserEntity, UpdateUserDto.class);
+        String newToken;
+        if(!oldEmail.equals(userDto.getEmail())){
+            newToken = Jwts.builder()
+                    .setSubject(userDto.getEmail())
+                    .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
+                    .signWith(SignatureAlgorithm.HS512, SecurityConstants.getTokenSecret())
+                    .compact();
+            returnValue.setNewToken(newToken);
+        }
+        return returnValue;
+
     }
 
     @Override

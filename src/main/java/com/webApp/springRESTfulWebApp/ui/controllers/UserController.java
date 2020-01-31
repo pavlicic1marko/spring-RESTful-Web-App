@@ -2,6 +2,7 @@ package com.webApp.springRESTfulWebApp.ui.controllers;
 
 
 import com.webApp.springRESTfulWebApp.dto.AddressDto;
+import com.webApp.springRESTfulWebApp.dto.UpdateUserDto;
 import com.webApp.springRESTfulWebApp.dto.UserDto;
 import com.webApp.springRESTfulWebApp.exceptions.customexceptions.UserControllerException;
 import com.webApp.springRESTfulWebApp.exceptions.messages.ErrorMessages;
@@ -10,14 +11,12 @@ import com.webApp.springRESTfulWebApp.model.response.AddressInformationResponseM
 import com.webApp.springRESTfulWebApp.model.response.UserInformationResponseModel;
 import com.webApp.springRESTfulWebApp.service.implementation.AddressServiceImplementation;
 import com.webApp.springRESTfulWebApp.service.implementation.UserServiceImplementation;
-import com.webApp.springRESTfulWebApp.shared.Utils;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -91,7 +90,7 @@ public class UserController {
     @ApiOperation(value = "Update user information Endpoint")
     public UserInformationResponseModel updateUser(@PathVariable String userId, @RequestBody UserInformationRequestModel userInformation) {
         UserDto userDto = modelMapper.map(userInformation, UserDto.class);
-        UserDto updatedValue = userServiceImplementation.updateUser(userId, userDto);
+        UpdateUserDto updatedValue = userServiceImplementation.updateUser(userId, userDto);
         return modelMapper.map(updatedValue, UserInformationResponseModel.class);
     }
 

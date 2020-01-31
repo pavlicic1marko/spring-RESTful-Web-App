@@ -1,5 +1,6 @@
 package com.webApp.springRESTfulWebApp.service.interfaces;
 
+import com.webApp.springRESTfulWebApp.dto.UpdateUserDto;
 import com.webApp.springRESTfulWebApp.dto.UserDto;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -10,7 +11,7 @@ public interface UserService extends UserDetailsService {
 
     List<UserDto> getUsers(int page, int limit);
 
-    UserDto updateUser(String userId, UserDto userDto);
+    UpdateUserDto updateUser(String userId, UserDto userDto);
 
     UserDto deleteUser(String userId);
 
