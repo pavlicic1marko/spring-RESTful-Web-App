@@ -1,6 +1,8 @@
 package com.webApp.springRESTfulWebApp.ui.controllers;
 
 import com.webApp.springRESTfulWebApp.dto.AddressDto;
+import com.webApp.springRESTfulWebApp.exceptions.customexceptions.ErrorMessageObject;
+import com.webApp.springRESTfulWebApp.exceptions.messages.ErrorMessages;
 import com.webApp.springRESTfulWebApp.model.response.AddressInformationResponseModel;
 import com.webApp.springRESTfulWebApp.service.interfaces.AddressService;
 import org.modelmapper.ModelMapper;
@@ -11,6 +13,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +32,7 @@ public class AddressController {
     public ResponseEntity<?> getAddresses(@RequestParam(value="type",required = false)String type){
         List<AddressDto>  addressDtoList =addressService.getAddresses(Optional.ofNullable(type));
         if(addressDtoList.size()==0){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("address record was not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorMessageObject(new Date(), ErrorMessages.ADDRESS_RECORD_NOT_FOUND.getErrorMessage()));
         }
         List<AddressInformationResponseModel> addressInformationResponseModelList = new ArrayList<>();
         addressDtoList.forEach(addressDto -> addressInformationResponseModelList.add(modelMapper.map(addressDto,AddressInformationResponseModel.class)));

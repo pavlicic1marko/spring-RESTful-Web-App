@@ -4,7 +4,8 @@ public enum ErrorMessages {
 
     MISSING_REQUIRED_FIELD("Missing required field. Please check documentation for required fields"),
     RECORD_ALREADY_EXISTS("Record already exists"),
-    NO_RECORD_FOUND("Record with provided id is not found");
+    NO_RECORD_FOUND("Record with provided id is not found"),
+    ADDRESS_RECORD_NOT_FOUND("address record was not found");
 
     private String errorMessage;
 
