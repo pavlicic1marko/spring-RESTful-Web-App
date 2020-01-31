@@ -70,6 +70,7 @@ public class UserServiceImplementation implements UserService {
         userEntity.setEmail(userDto.getEmail());
         userEntity.setFirstName(userDto.getFirstName());
         userEntity.setLastName(userDto.getLastName());
+        userEntity.setEncryptedPassWord(bCryptPasswordEncoder.encode(userDto.getPassword()));
         UserEntity updatedUserEntity = userRepository.save(userEntity);
         return modelMapper.map(updatedUserEntity, UserDto.class);
     }
