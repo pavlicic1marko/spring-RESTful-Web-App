@@ -2,6 +2,7 @@ package com.webApp.springRESTfulWebApp.service.implementation;
 
 import com.webApp.springRESTfulWebApp.dto.AddressDto;
 import com.webApp.springRESTfulWebApp.dto.UserDto;
+import com.webApp.springRESTfulWebApp.entities.AddressEntity;
 import com.webApp.springRESTfulWebApp.entities.RoleEntity;
 import com.webApp.springRESTfulWebApp.entities.UserEntity;
 import com.webApp.springRESTfulWebApp.exceptions.customexceptions.UserServiceExceptions;
@@ -17,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -89,13 +89,15 @@ public class UserServiceImplementation implements UserService {
         for (int i = 0; i < userDto.getAddresses().size(); i++) {
             AddressDto address = userDto.getAddresses().get(i);
             address.setUserDetails(userDto);
-            address.setAddressId(UUID.randomUUID().toString());
             userDto.getAddresses().set(i, address);
         }
         utils.checkUserData(userDto);
         utils.formatUserData(userDto);
         UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
         userEntity.setUserId(UUID.randomUUID().toString());
+        for (AddressEntity addressEntity:userEntity.getAddresses()) {
+            addressEntity.setAddressId(UUID.randomUUID().toString());
+        }
         userEntity.setEncryptedPassWord(bCryptPasswordEncoder.encode(userDto.getPassword()));
         
         Collection<RoleEntity> roleEntities = new HashSet<>();

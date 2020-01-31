@@ -1,7 +1,10 @@
 package com.webApp.springRESTfulWebApp.model.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class AddressInformationResponseModel {
 
+    @JsonIgnore
     private String addressId;
 
     private String city;
