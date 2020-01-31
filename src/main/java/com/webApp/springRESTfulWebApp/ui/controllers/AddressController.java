@@ -5,6 +5,7 @@ import com.webApp.springRESTfulWebApp.model.response.AddressInformationResponseM
 import com.webApp.springRESTfulWebApp.service.interfaces.AddressService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+@Secured("ROLE_ADMIN")
 @RequestMapping("address")
 @RestController
 public class AddressController {
