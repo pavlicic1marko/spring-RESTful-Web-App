@@ -25,6 +25,14 @@ public class AddressServiceImplementation implements AddressService {
     private ModelMapper modelMapper = new ModelMapper();
 
     @Override
+    public List<AddressDto> getAddresses() {
+        Iterable<AddressEntity> addressEntityIterable = addressRepository.findAll();
+        List<AddressDto> addressDtoList = new ArrayList<>();
+        addressEntityIterable.forEach(addressEntity -> addressDtoList.add(modelMapper.map(addressEntity, AddressDto.class)));
+        return addressDtoList;
+    }
+
+    @Override
     public List<AddressDto> getAddressesByUserId(String userId) {
         UserEntity userEntity = userRepository.findByUserId(userId);
         List<AddressEntity> addressEntitiesList = userEntity.getAddresses();

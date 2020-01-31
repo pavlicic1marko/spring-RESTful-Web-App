@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RequestMapping("address")
 @RestController
 public class AddressController {
@@ -18,6 +21,15 @@ public class AddressController {
     AddressService addressService;
 
     private ModelMapper modelMapper = new ModelMapper();
+
+
+    @GetMapping
+    public List<AddressInformationResponseModel> getAddresses(){
+        List<AddressDto>  addressDtoList =addressService.getAddresses();
+        List<AddressInformationResponseModel> addressInformationResponseModelList = new ArrayList<>();
+        addressDtoList.forEach(addressDto -> addressInformationResponseModelList.add(modelMapper.map(addressDto,AddressInformationResponseModel.class)));
+        return addressInformationResponseModelList;
+    }
 
 
     @GetMapping(path = "/{addressId}")
