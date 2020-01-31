@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AddressServiceImplementation implements AddressService {
@@ -25,8 +26,14 @@ public class AddressServiceImplementation implements AddressService {
     private ModelMapper modelMapper = new ModelMapper();
 
     @Override
-    public List<AddressDto> getAddresses() {
-        Iterable<AddressEntity> addressEntityIterable = addressRepository.findAll();
+    public List<AddressDto> getAddresses(Optional<String> type) {
+        if(!type.isPresent()) {
+            Iterable<AddressEntity> addressEntityIterable = addressRepository.findAll();
+            List<AddressDto> addressDtoList = new ArrayList<>();
+            addressEntityIterable.forEach(addressEntity -> addressDtoList.add(modelMapper.map(addressEntity, AddressDto.class)));
+            return addressDtoList;
+        }
+        Iterable<AddressEntity> addressEntityIterable = addressRepository.findAllByAddressType(type.get());
         List<AddressDto> addressDtoList = new ArrayList<>();
         addressEntityIterable.forEach(addressEntity -> addressDtoList.add(modelMapper.map(addressEntity, AddressDto.class)));
         return addressDtoList;

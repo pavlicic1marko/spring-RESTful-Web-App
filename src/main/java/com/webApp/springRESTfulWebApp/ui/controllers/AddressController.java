@@ -6,13 +6,11 @@ import com.webApp.springRESTfulWebApp.service.interfaces.AddressService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Secured("ROLE_ADMIN")
 @RequestMapping("address")
@@ -26,8 +24,8 @@ public class AddressController {
 
 
     @GetMapping
-    public List<AddressInformationResponseModel> getAddresses(){
-        List<AddressDto>  addressDtoList =addressService.getAddresses();
+    public List<AddressInformationResponseModel> getAddresses(@RequestParam(value="type",required = false)String type){
+        List<AddressDto>  addressDtoList =addressService.getAddresses(Optional.ofNullable(type));
         List<AddressInformationResponseModel> addressInformationResponseModelList = new ArrayList<>();
         addressDtoList.forEach(addressDto -> addressInformationResponseModelList.add(modelMapper.map(addressDto,AddressInformationResponseModel.class)));
         return addressInformationResponseModelList;
