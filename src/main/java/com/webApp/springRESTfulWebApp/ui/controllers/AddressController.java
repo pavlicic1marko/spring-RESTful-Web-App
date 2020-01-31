@@ -5,6 +5,8 @@ import com.webApp.springRESTfulWebApp.model.response.AddressInformationResponseM
 import com.webApp.springRESTfulWebApp.service.interfaces.AddressService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,11 +26,14 @@ public class AddressController {
 
 
     @GetMapping
-    public List<AddressInformationResponseModel> getAddresses(@RequestParam(value="type",required = false)String type){
+    public ResponseEntity<?> getAddresses(@RequestParam(value="type",required = false)String type){
         List<AddressDto>  addressDtoList =addressService.getAddresses(Optional.ofNullable(type));
+        if(addressDtoList.size()==0){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("address record was not found");
+        }
         List<AddressInformationResponseModel> addressInformationResponseModelList = new ArrayList<>();
         addressDtoList.forEach(addressDto -> addressInformationResponseModelList.add(modelMapper.map(addressDto,AddressInformationResponseModel.class)));
-        return addressInformationResponseModelList;
+        return ResponseEntity.ok((addressInformationResponseModelList));
     }
 
 
