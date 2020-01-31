@@ -86,6 +86,10 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) {
+        UserEntity user = userRepository.findByEmail(userDto.getEmail().toLowerCase().trim());
+        if (user!=null){
+            throw new UserServiceExceptions(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
+        }
         for (int i = 0; i < userDto.getAddresses().size(); i++) {
             AddressDto address = userDto.getAddresses().get(i);
             address.setUserDetails(userDto);
