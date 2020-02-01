@@ -78,10 +78,10 @@ public class UserServiceImplementation implements UserService {
         userEntity.setEncryptedPassWord(bCryptPasswordEncoder.encode(userDto.getPassword()));
         UserEntity updatedUserEntity = userRepository.save(userEntity);
 
-        UpdateUserDto returnValue= modelMapper.map(updatedUserEntity, UpdateUserDto.class);
-        String newToken;
+        UpdateUserDto returnValue = modelMapper.map(updatedUserEntity, UpdateUserDto.class);
+
         if(!oldEmail.equals(userDto.getEmail())){
-            newToken = Jwts.builder()
+            String newToken = Jwts.builder()
                     .setSubject(userDto.getEmail())
                     .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
                     .signWith(SignatureAlgorithm.HS512, SecurityConstants.getTokenSecret())

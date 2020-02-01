@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.UUID;
 
 @Component
 public class InitializingDefaultUsers {
@@ -44,7 +43,6 @@ public class InitializingDefaultUsers {
         RoleEntity roleUser = createRole(Roles.ROLE_USER.name(), Arrays.asList(readAuthority, writeAuthority));
         RoleEntity roleAdmin = createRole(Roles.ROLE_ADMIN.name(), Arrays.asList(readAuthority, writeAuthority, deleteAuthority));
 
-        if(roleAdmin == null) return;
         UserEntity adminUser = new UserEntity();
 
         adminUser.setEmail("adminUser@mail.com");
@@ -55,7 +53,6 @@ public class InitializingDefaultUsers {
         adminUser.setRoles(Arrays.asList(roleAdmin));
         userRepository.save(adminUser);
 
-        if(roleUser==null) return;
         UserEntity regularUser = new UserEntity();
         regularUser.setEmail("regularUser@mail.com");
         regularUser.setFirstName("regular");

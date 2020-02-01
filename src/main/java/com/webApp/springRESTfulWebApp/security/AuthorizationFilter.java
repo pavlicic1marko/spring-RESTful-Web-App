@@ -3,7 +3,6 @@ package com.webApp.springRESTfulWebApp.security;
 import com.webApp.springRESTfulWebApp.entities.UserEntity;
 import com.webApp.springRESTfulWebApp.repositories.UserRepository;
 import io.jsonwebtoken.Jwts;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,7 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class AuthorizationFilter extends BasicAuthenticationFilter {
 

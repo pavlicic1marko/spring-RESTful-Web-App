@@ -1,7 +1,6 @@
 package com.webApp.springRESTfulWebApp.shared;
 
 import com.webApp.springRESTfulWebApp.dto.UserDto;
-import com.webApp.springRESTfulWebApp.model.request.UserInformationRequestModel;
 import org.springframework.stereotype.Component;
 
 
