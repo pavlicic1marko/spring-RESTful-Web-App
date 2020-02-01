@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+
 @Service
 public class UserServiceImplementation implements UserService {
 
@@ -70,7 +71,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public UpdateUserDto updateUser(String userId, UserDto userDto) {
-        UserEntity userEntity = userRepository.findByUserId(userId);
+        UserEntity  userEntity = Optional.ofNullable(userRepository.findByUserId(userId)).orElseThrow(() -> new UserServiceExceptions(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()));
         String oldEmail = userEntity.getEmail();
         userEntity.setEmail(userDto.getEmail());
         userEntity.setFirstName(userDto.getFirstName());
@@ -94,7 +95,7 @@ public class UserServiceImplementation implements UserService {
     public UserDto deleteUser(String userId) {
         UserEntity userEntity = userRepository.findByUserId(userId);
         if (userEntity == null) {
-            throw new RuntimeException("There is no user with provided User Id");
+            throw new UserServiceExceptions(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
         }
         userRepository.delete(userEntity);
         return modelMapper.map(userEntity, UserDto.class);
