@@ -23,7 +23,7 @@ import java.util.Optional;
 public class AddressController {
 
     @Autowired
-    AddressService addressService;
+    private AddressService addressService;
 
     private ModelMapper modelMapper = new ModelMapper();
 

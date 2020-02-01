@@ -3,6 +3,8 @@ package com.webApp.springRESTfulWebApp.service.implementation;
 import com.webApp.springRESTfulWebApp.dto.AddressDto;
 import com.webApp.springRESTfulWebApp.entities.AddressEntity;
 import com.webApp.springRESTfulWebApp.entities.UserEntity;
+import com.webApp.springRESTfulWebApp.exceptions.customexceptions.UserServiceExceptions;
+import com.webApp.springRESTfulWebApp.exceptions.messages.ErrorMessages;
 import com.webApp.springRESTfulWebApp.repositories.AddressRepository;
 import com.webApp.springRESTfulWebApp.repositories.UserRepository;
 import com.webApp.springRESTfulWebApp.service.interfaces.AddressService;
@@ -51,6 +53,7 @@ public class AddressServiceImplementation implements AddressService {
     @Override
     public AddressDto getAddressByAddressId(String addressId) {
         AddressEntity addressEntity = addressRepository.findByAddressId(addressId);
+        if(addressEntity ==null) throw new UserServiceExceptions(ErrorMessages.ADDRESS_RECORD_NOT_FOUND.getErrorMessage());
         return modelMapper.map(addressEntity,AddressDto.class);
     }
 }

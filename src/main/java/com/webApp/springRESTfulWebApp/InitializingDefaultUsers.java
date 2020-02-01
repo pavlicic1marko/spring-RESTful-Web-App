@@ -45,7 +45,7 @@ public class InitializingDefaultUsers {
 
         UserEntity adminUser = new UserEntity();
 
-        adminUser.setEmail("adminUser@mail.com");
+        adminUser.setEmail("adminuser@mail.com");
         adminUser.setFirstName("admin");
         adminUser.setLastName("user");
         adminUser.setEncryptedPassWord(bCryptPasswordEncoder.encode("1234"));
@@ -54,7 +54,7 @@ public class InitializingDefaultUsers {
         userRepository.save(adminUser);
 
         UserEntity regularUser = new UserEntity();
-        regularUser.setEmail("regularUser@mail.com");
+        regularUser.setEmail("regularuser@mail.com");
         regularUser.setFirstName("regular");
         regularUser.setLastName("user");
         regularUser.setEncryptedPassWord(bCryptPasswordEncoder.encode("1234"));

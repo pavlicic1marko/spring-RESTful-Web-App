@@ -64,7 +64,7 @@ public class UserController {
 
     @PostMapping
     @ApiOperation(value = "Create a new user Endpoint")
-    public UserInformationResponseModel createUser(@RequestBody UserInformationRequestModel userInformation) {
+    public UserInformationResponseModel createUser(@RequestBody @Validated UserInformationRequestModel userInformation) {
         if (userInformation.getAddresses() == null) {
             throw new UserControllerException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }

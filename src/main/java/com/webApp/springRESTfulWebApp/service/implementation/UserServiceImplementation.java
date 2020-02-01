@@ -43,7 +43,7 @@ public class UserServiceImplementation implements UserService {
     private RoleRepository roleRepository;
 
     @Autowired
-    Utils utils;
+    private Utils utils;
 
     private ModelMapper modelMapper = new ModelMapper();
 
@@ -70,7 +70,6 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public UpdateUserDto updateUser(String userId, UserDto userDto) {
-        utils.checkUserData(userDto);
         UserEntity userEntity = userRepository.findByUserId(userId);
         String oldEmail = userEntity.getEmail();
         userEntity.setEmail(userDto.getEmail());
@@ -112,7 +111,6 @@ public class UserServiceImplementation implements UserService {
             address.setUserDetails(userDto);
             userDto.getAddresses().set(i, address);
         }
-        utils.checkUserData(userDto);
         utils.formatUserData(userDto);
         UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
         userEntity.setUserId(UUID.randomUUID().toString());
