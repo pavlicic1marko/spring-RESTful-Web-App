@@ -1,6 +1,7 @@
 package com.webApp.springRESTfulWebApp.service.implementation;
 
 import com.webApp.springRESTfulWebApp.dto.AddressDto;
+import com.webApp.springRESTfulWebApp.dto.ResetPasswordDto;
 import com.webApp.springRESTfulWebApp.dto.UpdateUserDto;
 import com.webApp.springRESTfulWebApp.dto.UserDto;
 import com.webApp.springRESTfulWebApp.entities.AddressEntity;
@@ -75,9 +76,7 @@ public class UserServiceImplementation implements UserService {
         userEntity.setEmail(userDto.getEmail());
         userEntity.setFirstName(userDto.getFirstName());
         userEntity.setLastName(userDto.getLastName());
-        userEntity.setEncryptedPassWord(bCryptPasswordEncoder.encode(userDto.getPassword()));
         UserEntity updatedUserEntity = userRepository.save(userEntity);
-
         UpdateUserDto returnValue = modelMapper.map(updatedUserEntity, UpdateUserDto.class);
 
         if(!oldEmail.equals(userDto.getEmail())){
@@ -140,6 +139,17 @@ public class UserServiceImplementation implements UserService {
         UserDto returnValue = modelMapper.map(userEntity, UserDto.class);
 
         return returnValue;
+    }
+
+    @Override
+    public String restPassword(ResetPasswordDto resetPasswordDto, String email) {
+        UserEntity userEntity = userRepository.findByEmail(email);
+        if (userEntity == null) {
+            throw new UserServiceExceptions(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+        }
+        userEntity.setEncryptedPassWord(bCryptPasswordEncoder.encode(resetPasswordDto.getPassword()));
+        userRepository.save(userEntity);
+        return "Password was updated";
     }
 
     @Override

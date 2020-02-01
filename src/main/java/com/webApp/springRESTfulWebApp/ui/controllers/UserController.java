@@ -2,6 +2,7 @@ package com.webApp.springRESTfulWebApp.ui.controllers;
 
 
 import com.webApp.springRESTfulWebApp.dto.AddressDto;
+import com.webApp.springRESTfulWebApp.dto.ResetPasswordDto;
 import com.webApp.springRESTfulWebApp.dto.UserDto;
 import com.webApp.springRESTfulWebApp.exceptions.customexceptions.UserControllerException;
 import com.webApp.springRESTfulWebApp.exceptions.messages.ErrorMessages;
@@ -92,6 +93,15 @@ public class UserController {
         UserDto userDto = modelMapper.map(userInformation, UserDto.class);
         return modelMapper.map(userServiceImplementation.updateUser(userId, userDto), UserInformationResponseModel.class);
     }
+
+    @PutMapping(path = "resetpassword/{userName}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')or #userName==principal.username")
+    @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "${userController.authorizationHeader.description}", paramType = "header")})
+    @ApiOperation(value = "Reset password")
+    public String resetPassword(@PathVariable String userName, @RequestBody ResetPasswordDto resetPasswordDto){
+        return userServiceImplementation.restPassword(resetPasswordDto,userName);
+    }
+
 
     @GetMapping(path = "/{id}/addresses")
     @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "${userController.authorizationHeader.description}", paramType = "header")})
