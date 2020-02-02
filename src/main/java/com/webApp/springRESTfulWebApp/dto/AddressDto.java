@@ -1,5 +1,7 @@
 package com.webApp.springRESTfulWebApp.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class AddressDto {
 
     private String addressId;
@@ -12,6 +14,7 @@ public class AddressDto {
 
     private String addressType;
 
+    @JsonIgnore
     private UserDto userDetails;
 
 
