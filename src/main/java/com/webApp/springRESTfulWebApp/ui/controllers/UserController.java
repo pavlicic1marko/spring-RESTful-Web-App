@@ -3,6 +3,7 @@ package com.webApp.springRESTfulWebApp.ui.controllers;
 
 import com.webApp.springRESTfulWebApp.dto.AddressDto;
 import com.webApp.springRESTfulWebApp.dto.ResetPasswordDto;
+import com.webApp.springRESTfulWebApp.dto.UpdateUserDto;
 import com.webApp.springRESTfulWebApp.dto.UserDto;
 import com.webApp.springRESTfulWebApp.exceptions.customexceptions.UserControllerException;
 import com.webApp.springRESTfulWebApp.exceptions.messages.ErrorMessages;
@@ -89,9 +90,9 @@ public class UserController {
     @PutMapping(path = "/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "${userController.authorizationHeader.description}", paramType = "header")})
     @ApiOperation(value = "Update user information Endpoint")
-    public UserInformationResponseModel updateUser(@PathVariable String userId, @RequestBody @Validated UserInformationRequestModel userInformation) {
+    public UpdateUserDto updateUser(@PathVariable String userId, @RequestBody @Validated UserInformationRequestModel userInformation) {
         UserDto userDto = modelMapper.map(userInformation, UserDto.class);
-        return modelMapper.map(userServiceImplementation.updateUser(userId, userDto), UserInformationResponseModel.class);
+        return userServiceImplementation.updateUser(userId, userDto);
     }
 
     @PutMapping(path = "resetpassword/{userName}")

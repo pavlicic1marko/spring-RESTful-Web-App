@@ -6,7 +6,6 @@ public class UserInformationResponseModel {
     private String firstName;
     private String lastName;
     private String email;
-    private String newToken;
     private List<AddressInformationResponseModel> addresses;
 
 
@@ -33,14 +32,6 @@ public class UserInformationResponseModel {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getNewToken() {
-        return newToken;
-    }
-
-    public void setNewToken(String newToken) {
-        this.newToken = newToken;
     }
 
     public List<AddressInformationResponseModel> getAddresses() {

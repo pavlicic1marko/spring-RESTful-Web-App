@@ -144,7 +144,7 @@ public class UserControllerTest {
     @Test
     final void updateUser() {
         when(userServiceImplementation.updateUser(anyString(), any(UserDto.class))).thenReturn(updateUserDto);
-        UserInformationResponseModel userInformation = userController.updateUser(userId, userInformationRequestModel);
+        UpdateUserDto userInformation = userController.updateUser(userId, userInformationRequestModel);
         assertNotNull(userInformation);
         assertEquals(email, userInformation.getEmail());
         assertEquals(firstName, userInformation.getFirstName());
