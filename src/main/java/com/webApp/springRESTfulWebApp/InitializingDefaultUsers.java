@@ -1,5 +1,6 @@
 package com.webApp.springRESTfulWebApp;
 
+import com.webApp.springRESTfulWebApp.entities.AddressEntity;
 import com.webApp.springRESTfulWebApp.entities.AuthorityEntity;
 import com.webApp.springRESTfulWebApp.entities.RoleEntity;
 import com.webApp.springRESTfulWebApp.entities.UserEntity;
@@ -15,8 +16,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @Component
 public class InitializingDefaultUsers {
@@ -53,6 +56,15 @@ public class InitializingDefaultUsers {
         adminUser.setRoles(Arrays.asList(roleAdmin));
         userRepository.save(adminUser);
 
+        List<AddressEntity> addressEntityList = new ArrayList<>();
+        AddressEntity addressEntity= new AddressEntity();
+        addressEntity.setStreetNumber("12");
+        addressEntity.setStreetName("Python");
+        addressEntity.setCity("NY");
+        addressEntity.setAddressType("work");
+        addressEntity.setAddressId("6112c0a4925e-0375a9e2-c88d-4912-a9f8");
+        addressEntityList.add(0, addressEntity);
+
         UserEntity regularUser = new UserEntity();
         regularUser.setEmail("regularuser@mail.com");
         regularUser.setFirstName("regular");
@@ -60,6 +72,9 @@ public class InitializingDefaultUsers {
         regularUser.setEncryptedPassWord(bCryptPasswordEncoder.encode("1234"));
         regularUser.setUserId("694aeba3-e1e5-4bd5-9d7e-4ef2e7f1fa3d");
         regularUser.setRoles(Arrays.asList(roleUser));
+        regularUser.setAddresses(addressEntityList);
+        addressEntity.setUserDetails(regularUser);
+
         userRepository.save(regularUser);
 
     }
