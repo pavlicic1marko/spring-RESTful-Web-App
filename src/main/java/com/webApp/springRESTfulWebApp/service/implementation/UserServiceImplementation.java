@@ -119,7 +119,8 @@ public class UserServiceImplementation implements UserService {
             addressEntity.setAddressId(UUID.randomUUID().toString());
         }
         userEntity.setEncryptedPassWord(bCryptPasswordEncoder.encode(userDto.getPassword()));
-        
+        userEntity.setAccountEnabled(false);
+
         Collection<RoleEntity> roleEntities = new HashSet<>();
         RoleEntity roleEntity = roleRepository.findByName(Roles.ROLE_USER.name());
         roleEntities.add(roleEntity);

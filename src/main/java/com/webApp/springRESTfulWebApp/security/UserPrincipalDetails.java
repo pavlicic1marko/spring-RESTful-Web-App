@@ -72,7 +72,7 @@ public class UserPrincipalDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return userEntity.isAccountEnabled();
     }
 
     public String getUserId() {

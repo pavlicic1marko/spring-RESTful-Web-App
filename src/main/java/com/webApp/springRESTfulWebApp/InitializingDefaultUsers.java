@@ -16,10 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class InitializingDefaultUsers {
@@ -49,11 +46,13 @@ public class InitializingDefaultUsers {
         UserEntity adminUser = new UserEntity();
 
         adminUser.setEmail("adminuser@mail.com");
+        adminUser.setAccountEnabled(true);
         adminUser.setFirstName("admin");
         adminUser.setLastName("user");
         adminUser.setEncryptedPassWord(bCryptPasswordEncoder.encode("1234"));
         adminUser.setUserId("0375a9e2-ceed-4912-a9f8-6112c0a4925e");
         adminUser.setRoles(Arrays.asList(roleAdmin));
+        adminUser.setDateCreated(new Date());
         userRepository.save(adminUser);
 
         List<AddressEntity> addressEntityList = new ArrayList<>();
@@ -67,12 +66,14 @@ public class InitializingDefaultUsers {
 
         UserEntity regularUser = new UserEntity();
         regularUser.setEmail("regularuser@mail.com");
+        regularUser.setAccountEnabled(true);
         regularUser.setFirstName("regular");
         regularUser.setLastName("user");
         regularUser.setEncryptedPassWord(bCryptPasswordEncoder.encode("1234"));
         regularUser.setUserId("694aeba3-e1e5-4bd5-9d7e-4ef2e7f1fa3d");
         regularUser.setRoles(Arrays.asList(roleUser));
         regularUser.setAddresses(addressEntityList);
+        regularUser.setDateCreated(new Date());
         addressEntity.setUserDetails(regularUser);
 
         userRepository.save(regularUser);

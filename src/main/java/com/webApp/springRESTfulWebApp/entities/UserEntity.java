@@ -31,6 +31,9 @@ public class UserEntity implements Serializable {
     @Column(nullable = false, length = 50, unique = true)
     private String email;
 
+    @Column(nullable = false)
+    private boolean accountEnabled;
+
     @Column(nullable = false, length = 200)
     private String encryptedPassWord;
 
@@ -87,6 +90,18 @@ public class UserEntity implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public boolean isAccountEnabled() {
+        return accountEnabled;
+    }
+
+    public void setAccountEnabled(boolean accountEnabled) {
+        this.accountEnabled = accountEnabled;
     }
 
     public String getEncryptedPassWord() {
