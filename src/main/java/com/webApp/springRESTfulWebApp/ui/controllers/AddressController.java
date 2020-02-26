@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.annotation.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +34,7 @@ public class AddressController {
 
     @GetMapping
     @ApiOperation(value = "Get  List of All addresses")
-    @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "${userController.authorizationHeader.description}", paramType = "header")})
+    @AddSwaggerToken
     public ResponseEntity<?> getAddresses(@RequestParam(value="type",required = false)String type){
         List<AddressDto>  addressDtoList =addressService.getAddresses(Optional.ofNullable(type));
         if(addressDtoList.size()==0){
@@ -47,10 +48,19 @@ public class AddressController {
 
     @GetMapping(path = "/{addressId}")
     @ApiOperation(value = "Get  address with provided id")
-    @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "${userController.authorizationHeader.description}", paramType = "header")})
+    @AddSwaggerToken
     public AddressInformationResponseModel getAddress(@PathVariable String addressId){
         AddressDto addressDto= addressService.getAddressByAddressId(addressId);
         return modelMapper.map(addressDto,AddressInformationResponseModel.class);
 
     }
+}
+
+@Inherited
+@Documented
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "${userController.authorizationHeader.description}", paramType = "header")})
+@interface AddSwaggerToken{
+
 }
