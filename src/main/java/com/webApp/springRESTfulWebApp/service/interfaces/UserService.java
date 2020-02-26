@@ -22,4 +22,8 @@ public interface UserService extends UserDetailsService {
 
     String restPassword(ResetPasswordDto resetPasswordDto,String userID);
 
+    String deactivateUserAccount(String userId);
+
+    String activateUserAccount(String userId);
+
 }

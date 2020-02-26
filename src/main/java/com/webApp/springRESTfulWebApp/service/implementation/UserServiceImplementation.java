@@ -164,6 +164,30 @@ public class UserServiceImplementation implements UserService {
         //return new User(userEntity.getEmail(), userEntity.getEncryptedPassWord(), new ArrayList<>());
     }
 
+    @Override
+    public String activateUserAccount(String userId){
+        UserEntity userEntity = userRepository.findByUserId(userId);
+        if (userEntity.isAccountEnabled()==true){
+            return "account is already active";
+        }
+        userEntity.setAccountEnabled(true);
+        userRepository.save(userEntity);
+        return "account is now active";
+    }
+
+    @Override
+    public String deactivateUserAccount(String userId){
+        UserEntity userEntity = userRepository.findByUserId(userId);
+        if (userEntity.isAccountEnabled()==false) {
+            return "account is already deactivated";
+        }
+        userEntity.setAccountEnabled(false);
+        userRepository.save(userEntity);
+        return "account is now deactivated";
+
+
+    }
+
     public  Boolean isAccountEnabledByDefault() {
         AppProperties appProperties = (AppProperties) SpringApplicationContext.getBean("AppProperties");
         return utils.ConvertStringToBoolean(appProperties.isAccountEnabledByDefault());

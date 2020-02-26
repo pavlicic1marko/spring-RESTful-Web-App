@@ -66,7 +66,7 @@ public class InitializingDefaultUsers {
 
         UserEntity regularUser = new UserEntity();
         regularUser.setEmail("regularuser@mail.com");
-        regularUser.setAccountEnabled(true);
+        regularUser.setAccountEnabled(false);
         regularUser.setFirstName("regular");
         regularUser.setLastName("user");
         regularUser.setEncryptedPassWord(bCryptPasswordEncoder.encode("1234"));
