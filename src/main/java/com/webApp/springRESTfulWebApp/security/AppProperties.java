@@ -14,4 +14,6 @@ public class AppProperties {
     public String getTokenSecret() {
         return env.getProperty("tokenSecret");
     }
+
+    public String isAccountEnabledByDefault(){return env.getProperty("isAccountEnabledByDefault");}
 }

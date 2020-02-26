@@ -10,4 +10,11 @@ public class Utils {
     public void formatUserData(UserDto userDto){
         userDto.setEmail(userDto.getEmail().toLowerCase().trim());
     }
+
+    public  Boolean ConvertStringToBoolean(String TrueOrFalse) {
+        if (TrueOrFalse.toLowerCase().equals("true")){
+            return true;
+        }
+        else return false;
+    }
 }

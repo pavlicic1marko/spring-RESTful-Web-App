@@ -1,5 +1,6 @@
 package com.webApp.springRESTfulWebApp.service.implementation;
 
+import com.webApp.springRESTfulWebApp.SpringApplicationContext;
 import com.webApp.springRESTfulWebApp.dto.AddressDto;
 import com.webApp.springRESTfulWebApp.dto.ResetPasswordDto;
 import com.webApp.springRESTfulWebApp.dto.UpdateUserDto;
@@ -11,6 +12,7 @@ import com.webApp.springRESTfulWebApp.exceptions.customexceptions.UserServiceExc
 import com.webApp.springRESTfulWebApp.exceptions.messages.ErrorMessages;
 import com.webApp.springRESTfulWebApp.repositories.RoleRepository;
 import com.webApp.springRESTfulWebApp.repositories.UserRepository;
+import com.webApp.springRESTfulWebApp.security.AppProperties;
 import com.webApp.springRESTfulWebApp.security.Roles;
 import com.webApp.springRESTfulWebApp.security.SecurityConstants;
 import com.webApp.springRESTfulWebApp.security.UserPrincipalDetails;
@@ -119,7 +121,7 @@ public class UserServiceImplementation implements UserService {
             addressEntity.setAddressId(UUID.randomUUID().toString());
         }
         userEntity.setEncryptedPassWord(bCryptPasswordEncoder.encode(userDto.getPassword()));
-        userEntity.setAccountEnabled(false);
+        userEntity.setAccountEnabled(isAccountEnabledByDefault());
 
         Collection<RoleEntity> roleEntities = new HashSet<>();
         RoleEntity roleEntity = roleRepository.findByName(Roles.ROLE_USER.name());
@@ -160,5 +162,10 @@ public class UserServiceImplementation implements UserService {
         }
         return new UserPrincipalDetails(userEntity);
         //return new User(userEntity.getEmail(), userEntity.getEncryptedPassWord(), new ArrayList<>());
+    }
+
+    public  Boolean isAccountEnabledByDefault() {
+        AppProperties appProperties = (AppProperties) SpringApplicationContext.getBean("AppProperties");
+        return utils.ConvertStringToBoolean(appProperties.isAccountEnabledByDefault());
     }
 }
