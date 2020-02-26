@@ -82,7 +82,7 @@ public class UserServiceImplementation implements UserService {
         UpdateUserDto returnValue = modelMapper.map(updatedUserEntity, UpdateUserDto.class);
 
         if(!oldEmail.equals(userDto.getEmail())){
-            String newToken = Jwts.builder()
+            String newToken = SecurityConstants.TOKEN_PREFIX + Jwts.builder()
                     .setSubject(userDto.getEmail())
                     .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
                     .signWith(SignatureAlgorithm.HS512, SecurityConstants.getTokenSecret())
@@ -167,7 +167,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     public String activateUserAccount(String userId){
         UserEntity userEntity = userRepository.findByUserId(userId);
-        if (userEntity.isAccountEnabled()==true){
+        if (userEntity.isAccountEnabled()){
             return "account is already active";
         }
         userEntity.setAccountEnabled(true);
@@ -178,7 +178,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     public String deactivateUserAccount(String userId){
         UserEntity userEntity = userRepository.findByUserId(userId);
-        if (userEntity.isAccountEnabled()==false) {
+        if (!userEntity.isAccountEnabled()) {
             return "account is already deactivated";
         }
         userEntity.setAccountEnabled(false);
@@ -188,7 +188,7 @@ public class UserServiceImplementation implements UserService {
 
     }
 
-    public  Boolean isAccountEnabledByDefault() {
+    private  Boolean isAccountEnabledByDefault() {
         AppProperties appProperties = (AppProperties) SpringApplicationContext.getBean("AppProperties");
         return utils.ConvertStringToBoolean(appProperties.isAccountEnabledByDefault());
     }

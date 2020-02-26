@@ -12,9 +12,6 @@ public class Utils {
     }
 
     public  Boolean ConvertStringToBoolean(String TrueOrFalse) {
-        if (TrueOrFalse.toLowerCase().equals("true")){
-            return true;
-        }
-        else return false;
+        return TrueOrFalse.toLowerCase().equals("true");
     }
 }

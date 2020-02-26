@@ -5,6 +5,9 @@ import com.webApp.springRESTfulWebApp.exceptions.customexceptions.ErrorMessageOb
 import com.webApp.springRESTfulWebApp.exceptions.messages.ErrorMessages;
 import com.webApp.springRESTfulWebApp.model.response.AddressInformationResponseModel;
 import com.webApp.springRESTfulWebApp.service.interfaces.AddressService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +32,8 @@ public class AddressController {
 
 
     @GetMapping
+    @ApiOperation(value = "Get  List of All addresses")
+    @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "${userController.authorizationHeader.description}", paramType = "header")})
     public ResponseEntity<?> getAddresses(@RequestParam(value="type",required = false)String type){
         List<AddressDto>  addressDtoList =addressService.getAddresses(Optional.ofNullable(type));
         if(addressDtoList.size()==0){
@@ -41,6 +46,8 @@ public class AddressController {
 
 
     @GetMapping(path = "/{addressId}")
+    @ApiOperation(value = "Get  address with provided id")
+    @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "${userController.authorizationHeader.description}", paramType = "header")})
     public AddressInformationResponseModel getAddress(@PathVariable String addressId){
         AddressDto addressDto= addressService.getAddressByAddressId(addressId);
         return modelMapper.map(addressDto,AddressInformationResponseModel.class);

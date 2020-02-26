@@ -4,7 +4,7 @@ import com.webApp.springRESTfulWebApp.SpringApplicationContext;
 
 public class  SecurityConstants {
     public static final long EXPIRATION_TIME = 864000000; // 10 days
-    static final String TOKEN_PREFIX = "Bearer ";
+    public static final String TOKEN_PREFIX = "Bearer ";
     static final String HEADER_STRING = "Authorization";
     static final String SIGN_UP_URL = "/users";
     static final String LOG_IN_URL = "/users/login";
