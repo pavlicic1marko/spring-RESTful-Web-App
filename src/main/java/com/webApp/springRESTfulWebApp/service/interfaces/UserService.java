@@ -18,6 +18,8 @@ public interface UserService extends UserDetailsService {
 
     UserDto createUser(UserDto userDto);
 
+    UserDto createAdminUser(UserDto userDto);
+
     UserDto getUser(String email);
 
     String restPassword(ResetPasswordDto resetPasswordDto,String userID);

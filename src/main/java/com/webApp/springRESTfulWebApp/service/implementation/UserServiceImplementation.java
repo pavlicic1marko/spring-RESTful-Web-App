@@ -129,6 +129,30 @@ public class UserServiceImplementation implements UserService {
         userEntity.setRoles(roleEntities);
         userEntity.setDateCreated(new Date());
 
+        UserEntity savedUserEntity = userRepository.save(userEntity);
+        return modelMapper.map(savedUserEntity, UserDto.class);
+    }
+
+    @Override
+    public UserDto createAdminUser(UserDto userDto) {
+        UserEntity user = userRepository.findByEmail(userDto.getEmail().toLowerCase().trim());
+        if (user!=null){
+            throw new UserServiceExceptions(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
+        }
+        utils.formatUserData(userDto);
+        UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
+        userEntity.setUserId(UUID.randomUUID().toString());
+        for (AddressEntity addressEntity:userEntity.getAddresses()) {
+            addressEntity.setAddressId(UUID.randomUUID().toString());
+        }
+        userEntity.setEncryptedPassWord(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        userEntity.setAccountEnabled(true);
+
+        Collection<RoleEntity> roleEntities = new HashSet<>();
+        RoleEntity roleEntity = roleRepository.findByName(Roles.ROLE_ADMIN.name());
+        roleEntities.add(roleEntity);
+        userEntity.setRoles(roleEntities);
+        userEntity.setDateCreated(new Date());
 
         UserEntity savedUserEntity = userRepository.save(userEntity);
         return modelMapper.map(savedUserEntity, UserDto.class);

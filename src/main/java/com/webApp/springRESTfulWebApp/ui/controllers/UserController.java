@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -113,4 +114,21 @@ class UserController {
         addressDtoList.forEach(address -> returnValue.add(modelMapper.map(address, AddressInformationResponseModel.class)));
         return returnValue;
     }
+
+    @PostMapping(path = "/admin")
+    @Secured("ROLE_ADMIN")
+    @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "${userController.authorizationHeader.description}", paramType = "header")})
+    @ApiOperation(value = "Create Admin user")
+    UserInformationResponseModel createAdminUser(@RequestBody UserInformationRequestModel userInformationRequestModel){
+        if (userInformationRequestModel.getAddresses() == null) {
+            throw new UserControllerException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+        }
+        UserDto userDto = modelMapper.map(userInformationRequestModel, UserDto.class);
+        UserDto userDtoSavedData =userServiceImplementation.createAdminUser(userDto);
+        UserInformationResponseModel returnValue = modelMapper.map(userDtoSavedData, UserInformationResponseModel.class);
+        return returnValue;
+
+
+    }
+
 }
