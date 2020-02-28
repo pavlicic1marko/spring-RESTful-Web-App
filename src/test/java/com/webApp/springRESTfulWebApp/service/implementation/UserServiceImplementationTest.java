@@ -15,7 +15,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 
-public class UserServiceImplementationTest {
+class UserServiceImplementationTest {
 
 
     @InjectMocks

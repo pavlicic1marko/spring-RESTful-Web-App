@@ -13,7 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 import java.util.Date;
 
 @ControllerAdvice
-public class AppExceptionHandler {
+class AppExceptionHandler {
 
     @ExceptionHandler(value = {UserControllerException.class})
     public ResponseEntity<Object> handleUserControllerException(UserControllerException ex, WebRequest request) {

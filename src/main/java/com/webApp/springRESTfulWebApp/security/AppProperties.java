@@ -1,5 +1,6 @@
 package com.webApp.springRESTfulWebApp.security;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -11,9 +12,11 @@ public class AppProperties {
     @Autowired
     private Environment env;
 
-    public String getTokenSecret() {
+    private ModelMapper modelMapper;
+
+    String getTokenSecret() {
         return env.getProperty("tokenSecret");
     }
 
-    public String isAccountEnabledByDefault(){return env.getProperty("isAccountEnabledByDefault");}
+    public Boolean isAccountEnabledByDefault(){ return env.getProperty("isAccountEnabledByDefault",Boolean.class) ;}
 }

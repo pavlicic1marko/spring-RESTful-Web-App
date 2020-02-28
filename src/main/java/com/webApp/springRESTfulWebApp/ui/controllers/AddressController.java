@@ -24,12 +24,12 @@ import java.util.Optional;
 @Secured("ROLE_ADMIN")
 @RequestMapping("address")
 @RestController
-public class AddressController {
+class AddressController {
 
     @Autowired
     private AddressService addressService;
 
-    private ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper = new ModelMapper();
 
 
     @GetMapping

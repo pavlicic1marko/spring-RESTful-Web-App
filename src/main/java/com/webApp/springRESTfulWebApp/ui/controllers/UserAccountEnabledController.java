@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("UserAccountStatus")
 @RestController
-public class UserAccountEnabledController {
+class UserAccountEnabledController {
 
     @Autowired
+    private
     UserServiceImplementation userServiceImplementation;
 
     @PostMapping(path="/Activate/{userId}")

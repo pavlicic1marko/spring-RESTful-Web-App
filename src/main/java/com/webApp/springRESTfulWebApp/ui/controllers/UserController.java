@@ -29,7 +29,7 @@ import java.util.List;
 
 @RequestMapping("users")
 @RestController
-public class UserController {
+class UserController {
 
     @Autowired
     private UserServiceImplementation userServiceImplementation;
@@ -58,14 +58,14 @@ public class UserController {
     @PostAuthorize("hasRole('ADMIN') or returnObject.email==principal.username")
     @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "${userController.authorizationHeader.description}", paramType = "header")})
     @ApiOperation(value = "Get information for a single users Endpoint")
-    public UserInformationResponseModel getUser(@PathVariable String userId) {
+    UserInformationResponseModel getUser(@PathVariable String userId) {
         UserDto userDto = userServiceImplementation.getUserByUserId(userId);
         return modelMapper.map(userDto, UserInformationResponseModel.class);
     }
 
     @PostMapping
     @ApiOperation(value = "Create a new user Endpoint")
-    public UserInformationResponseModel createUser(@RequestBody @Validated UserInformationRequestModel userInformation) {
+    UserInformationResponseModel createUser(@RequestBody @Validated UserInformationRequestModel userInformation) {
         if (userInformation.getAddresses() == null) {
             throw new UserControllerException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
@@ -82,7 +82,7 @@ public class UserController {
     //@Secured("ROLE_ADMIN")
     @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "${userController.authorizationHeader.description}", paramType = "header")})
     @ApiOperation(value = "Delete a  user Endpoint")
-    public UserInformationResponseModel deleteUser(@PathVariable String userId) {
+    UserInformationResponseModel deleteUser(@PathVariable String userId) {
         UserDto returnValue = userServiceImplementation.deleteUser(userId);
         return modelMapper.map(returnValue, UserInformationResponseModel.class);
     }
@@ -90,7 +90,7 @@ public class UserController {
     @PutMapping(path = "/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "${userController.authorizationHeader.description}", paramType = "header")})
     @ApiOperation(value = "Update user information Endpoint")
-    public UpdateUserDto updateUser(@PathVariable String userId, @RequestBody @Validated UserInformationRequestModel userInformation) {
+    UpdateUserDto updateUser(@PathVariable String userId, @RequestBody @Validated UserInformationRequestModel userInformation) {
         UserDto userDto = modelMapper.map(userInformation, UserDto.class);
         return userServiceImplementation.updateUser(userId, userDto);
     }
@@ -107,7 +107,7 @@ public class UserController {
     @GetMapping(path = "/{id}/addresses")
     @ApiImplicitParams({@ApiImplicitParam(name = "authorization", value = "${userController.authorizationHeader.description}", paramType = "header")})
     @ApiOperation(value = "Get all addresses for user with provided id")
-    public List<AddressInformationResponseModel> getUserAddresses(@PathVariable("id") String id) {
+    List<AddressInformationResponseModel> getUserAddresses(@PathVariable("id") String id) {
         List<AddressDto> addressDtoList = addressServiceImplementation.getAddressesByUserId(id);
         List<AddressInformationResponseModel> returnValue = new ArrayList<>();
         addressDtoList.forEach(address -> returnValue.add(modelMapper.map(address, AddressInformationResponseModel.class)));

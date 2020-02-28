@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableGlobalMethodSecurity(securedEnabled = true,prePostEnabled = true)
 @EnableWebSecurity
-public class WebSecurity extends WebSecurityConfigurerAdapter {
+class WebSecurity extends WebSecurityConfigurerAdapter {
 
     private final UserService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -47,7 +47,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
-    public AuthenticationFilter getAuthenticationFilter() throws Exception {
+    private AuthenticationFilter getAuthenticationFilter() throws Exception {
         final AuthenticationFilter filter = new AuthenticationFilter(authenticationManager());
         filter.setFilterProcessesUrl(SecurityConstants.LOG_IN_URL);
         return filter;

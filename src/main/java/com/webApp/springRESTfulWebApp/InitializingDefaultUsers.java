@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Component
-public class InitializingDefaultUsers {
+class InitializingDefaultUsers {
 
     @Autowired
     private AuthorityRepository authorityRepository;

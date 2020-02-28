@@ -11,7 +11,4 @@ public class Utils {
         userDto.setEmail(userDto.getEmail().toLowerCase().trim());
     }
 
-    public  Boolean ConvertStringToBoolean(String TrueOrFalse) {
-        return TrueOrFalse.toLowerCase().equals("true");
-    }
 }

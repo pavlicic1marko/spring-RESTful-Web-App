@@ -1,11 +1,16 @@
 package com.webApp.springRESTfulWebApp.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
+
 @Entity
+@Data
 public class AddressEntity implements Serializable {
     private static final long serialVersionUID = 4888534534534534539L;
 
@@ -31,7 +36,8 @@ public class AddressEntity implements Serializable {
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "users_id")//,insertable = false, updatable = false
+    @JoinColumn(name = "users_id") // insertable = false, updatable = false
+    @Getter(AccessLevel.NONE)
     private UserEntity userDetails;
 
 
@@ -79,4 +85,5 @@ public class AddressEntity implements Serializable {
     public void setUserDetails(UserEntity userDetails) {
         this.userDetails = userDetails;
     }
+
 }

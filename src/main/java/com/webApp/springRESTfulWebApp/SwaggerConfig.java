@@ -18,17 +18,17 @@ import java.util.List;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig {
+class SwaggerConfig {
 
-    Contact contact = new Contact(
+    private Contact contact = new Contact(
             "Marko Pavlicic",
             "http://www.apache.org/licenses/LICENSE-2.0",
             "noreply@test.com");
 
-    List<VendorExtension> vendorExtensions = new ArrayList<>();
+    private List<VendorExtension> vendorExtensions = new ArrayList<>();
 
 
-    ApiInfo apiInfo = new ApiInfo(
+    private ApiInfo apiInfo = new ApiInfo(
             "Spring RESTful Web App documentation",
             "documentation for Web Service endpoints",
             "1.0",
@@ -40,13 +40,12 @@ public class SwaggerConfig {
     @Bean
     public Docket apiDocket() {
 
-        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.SWAGGER_2)
                 .protocols(new HashSet<>(Arrays.asList("HTTP", "HTTPs")))
                 .apiInfo(apiInfo)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.webApp.springRESTfulWebApp"))
                 .paths(PathSelectors.any())
                 .build();
-        return docket;
     }
 }

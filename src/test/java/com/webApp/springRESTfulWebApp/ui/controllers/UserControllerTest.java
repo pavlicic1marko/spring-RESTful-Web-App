@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 
 
 
-public class UserControllerTest {
+class UserControllerTest {
 
     @InjectMocks
     UserController userController;

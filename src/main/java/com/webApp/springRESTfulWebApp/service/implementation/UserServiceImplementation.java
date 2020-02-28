@@ -190,6 +190,6 @@ public class UserServiceImplementation implements UserService {
 
     private  Boolean isAccountEnabledByDefault() {
         AppProperties appProperties = (AppProperties) SpringApplicationContext.getBean("AppProperties");
-        return utils.ConvertStringToBoolean(appProperties.isAccountEnabledByDefault());
+        return appProperties.isAccountEnabledByDefault();
     }
 }
