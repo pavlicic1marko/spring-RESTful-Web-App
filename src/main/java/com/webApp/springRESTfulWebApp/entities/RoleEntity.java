@@ -36,4 +36,10 @@ public class RoleEntity implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "authorities_id", referencedColumnName = "id"))
     private Collection<AuthorityEntity> authorities;
 
+    @Override
+    public String toString() {
+        return "RoleEntity{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

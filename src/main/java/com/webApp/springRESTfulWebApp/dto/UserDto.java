@@ -13,4 +13,12 @@ public class UserDto {
     private String userId;
     private List<AddressDto> addresses;
 
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
