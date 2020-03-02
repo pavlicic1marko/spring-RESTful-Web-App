@@ -16,7 +16,7 @@ public class CompanyInformationEntity {
     private String additionalInfo;
 
     @OneToOne
-    @JoinColumn(name = "users_id")
+    @JoinColumn(name = "companyEntity")
     private CompanyEntity companyEntity;
 
 }
