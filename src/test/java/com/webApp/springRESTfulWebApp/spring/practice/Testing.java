@@ -11,11 +11,11 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class Testing {
+class Testing {
     private static final String NAME = "John Smith";
 
     @Test
-    public void PrototypeScopeBeanDifferentName() {
+    void PrototypeScopeBeanDifferentName() {
 
         Person personSingletonA = (Person) SpringApplicationContext.getBean("PersonPrototype");
         Person personSingletonB = (Person) SpringApplicationContext.getBean("PersonPrototype");
@@ -27,7 +27,7 @@ public class Testing {
     }
 
     @Test
-    public void SingletonScopeBeanDifferentName() {
+    void SingletonScopeBeanDifferentName() {
         Person personSingletonA = (Person) SpringApplicationContext.getBean("PersonSingleton");
         Person personSingletonB = (Person) SpringApplicationContext.getBean("PersonSingleton");
         personSingletonA.setName("Marko");

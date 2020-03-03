@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
-public class LoadingTestData {
+class LoadingTestData {
 
     @Autowired
     private CompanyRepository companyRepository;
