@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface UserRepository extends PagingAndSortingRepository<UserEntity, Long> {
     UserEntity findByUserId(String userId);
@@ -25,6 +27,10 @@ public interface UserRepository extends PagingAndSortingRepository<UserEntity, L
 
     @Query("select user from UserEntity user where user.userId=:userId")
     UserEntity findUserEntityByUserId(@Param("userId") String userId);
+
+
+    @Query("select user from UserEntity user where user.email like %:string% or user.firstName like %:string% or user.lastName like %:string%")
+    List<UserEntity> searchForUser(@Param("string") String string);
 
     @Modifying
     @Transactional

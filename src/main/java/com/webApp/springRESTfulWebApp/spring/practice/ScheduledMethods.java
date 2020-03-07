@@ -9,19 +9,19 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class ScheduledMethods {
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 100000000)
     void printSomething(){
         System.out.println("this string is printed by the scheduled method with fixedRate = 1000, at " + System.currentTimeMillis() );
     }
 
     @Async
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 1000000000)
     void printSomethingAsync() throws InterruptedException {
         System.out.println("this string is printed with Async method" );
-        Thread.sleep(100000);
+        Thread.sleep(1000000000);
     }
 
-    @Scheduled(cron="* * * * * ?")
+    @Scheduled(cron="10 * * * * ?")
     void printSomethingCron(){
         System.out.println("this string is printed with cron method" );
     }

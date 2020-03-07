@@ -200,6 +200,15 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
+    public List<UserDto> searchForUser(String string) {
+        List<UserEntity> userEntityList = userRepository.searchForUser(string);
+        List<UserDto> userDtoList = new ArrayList<>();
+        userEntityList.forEach(userDtoStream -> userDtoList.add(modelMapper.map(userDtoStream, UserDto.class)));
+        return userDtoList;
+    }
+
+
+    @Override
     public String deactivateUserAccount(String userId){
         UserEntity userEntity = userRepository.findByUserId(userId);
         if (!userEntity.isAccountEnabled()) {

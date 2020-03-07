@@ -131,4 +131,16 @@ class UserController {
 
     }
 
+    @GetMapping(path = "searchforuser/{string}")
+    @ApiOperation(value = "find all users that have the query string in firstName or lastName or email")
+    List<UserInformationResponseModel>  searchForUsers(@PathVariable("string") String string){
+        List<UserDto> userDtoList = new ArrayList<>();
+        userDtoList = userServiceImplementation.searchForUser(string);
+        List<UserInformationResponseModel> returnValue = new ArrayList<>();
+        userDtoList.forEach(user -> returnValue.add(modelMapper.map(user, UserInformationResponseModel.class)));
+        return returnValue;
+    }
+
+
+
 }

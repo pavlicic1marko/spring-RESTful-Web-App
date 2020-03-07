@@ -28,4 +28,6 @@ public interface UserService extends UserDetailsService {
 
     String activateUserAccount(String userId);
 
+    List<UserDto> searchForUser(String string);
+
 }
