@@ -15,6 +15,7 @@ import com.webApp.springRESTfulWebApp.service.implementation.UserServiceImplemen
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -24,6 +25,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,6 +143,13 @@ class UserController {
         List<UserInformationResponseModel> returnValue = new ArrayList<>();
         userDtoList.forEach(user -> returnValue.add(modelMapper.map(user, UserInformationResponseModel.class)));
         return returnValue;
+    }
+
+    @GetMapping(path = "defaultimage",produces = MediaType.IMAGE_JPEG_VALUE)
+    public void getFile(HttpServletResponse response) throws IOException {
+        InputStream in =  ClassLoader.getSystemResourceAsStream("image.jpg");
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        IOUtils.copy(in,response.getOutputStream());
     }
 
 
