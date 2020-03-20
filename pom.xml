@@ -12,6 +12,7 @@
     <artifactId>spring-RESTful-Web-App</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-RESTful-Web-App</name>
+    <packaging>war</packaging>
     <description>Demo project for Spring Boot</description>
 
     <properties>
