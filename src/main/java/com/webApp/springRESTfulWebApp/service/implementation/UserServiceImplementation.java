@@ -8,7 +8,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public String getUsers() {
-        return "this method will return list of all users";
+        return "generacija 89";
     }
 
     @Override
