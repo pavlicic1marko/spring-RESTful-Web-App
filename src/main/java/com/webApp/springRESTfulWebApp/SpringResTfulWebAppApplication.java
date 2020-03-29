@@ -4,12 +4,19 @@ import com.webApp.springRESTfulWebApp.security.AppProperties;
 import com.webApp.springRESTfulWebApp.spring.practice.Person;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
-class SpringResTfulWebAppApplication {
+public class SpringResTfulWebAppApplication extends SpringBootServletInitializer {
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application){
+		return application.sources(SpringResTfulWebAppApplication.class);
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringResTfulWebAppApplication.class, args);
