@@ -1,7 +1,7 @@
 package com.webApp.springRESTfulWebApp.repositories;
 
 import com.webApp.springRESTfulWebApp.entities.UserEntity;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +16,24 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest
 class UserRepositoryTest {
 
-    @Autowired
-    private
-    UserRepository userRepository;
+    private static UserEntity userEntity;
 
-    private UserEntity userEntity;
+    @Autowired
+    private  UserRepository userRepository;
+
     private String email = "testemail@test.com";
     private String firstName = "Marko";
     private String lastName = "Pavlicic";
     private String encryptedPassword = "test";
     private String userID = "testId";
 
-    @BeforeEach
-    void SetUp() {
+    @BeforeAll
+    static final  void SetUp(@Autowired UserRepository userRepository) {
+         String email = "testemail@test.com";
+         String firstName = "Marko";
+         String lastName = "Pavlicic";
+         String encryptedPassword = "test";
+         String userID = "testId";
         //Create a User Entity and save it
         userEntity = new UserEntity();
         userEntity.setEmail(email);
@@ -46,7 +51,6 @@ class UserRepositoryTest {
         UserEntity entity = userRepository.findAllUsersWhereEmailEqualsToTesTEmail(email);
         assertNotNull(entity);
         assertEquals(email, entity.getEmail());
-        assertEquals(firstName, entity.getFirstName());
         assertEquals(lastName, entity.getLastName());
         assertEquals(encryptedPassword, entity.getEncryptedPassWord());
         assertEquals(userID, entity.getUserId());
@@ -58,7 +62,6 @@ class UserRepositoryTest {
         UserEntity entity = userRepository.findUserEntityByUserId(userID);
         assertNotNull(entity);
         assertEquals(email, entity.getEmail());
-        assertEquals(firstName, entity.getFirstName());
         assertEquals(lastName, entity.getLastName());
         assertEquals(encryptedPassword, entity.getEncryptedPassWord());
         assertEquals(userID, entity.getUserId());
