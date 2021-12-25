@@ -19,7 +19,7 @@ request body:
 
 --Get Requests
 HTTP GET requests:
-copy (prefix +token) "Bearer + Token" from the response header and add to the the Get request Authorization Header
+copy (prefix +token) "Bearer + Token" from the login request response header and add to the the Get request Authorization Header
 
 
 --Swager urls are
