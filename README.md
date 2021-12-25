@@ -19,7 +19,7 @@ request body:
 
 --Get Requests
 HTTP GET requests:
-copy "Bearer + Token" from the response header and add to the the Get request Authorization Header
+copy (prefix +token) "Bearer + Token" from the response header and add to the the Get request Authorization Header
 
 
 --Swager urls are
@@ -27,8 +27,8 @@ Base url + "/v2/api-docs"
 Base url + "/swagger-ui.html"
 
 
---Database:
-h2
+--H2 Database:
+Base URL + "h2-console"
 
 
 --War name:
