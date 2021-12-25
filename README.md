@@ -26,3 +26,11 @@ copy "Bearer + Token" from the response header and add to the the Get request Au
 Base url + "/v2/api-docs"
 Base url + "/swagger-ui.html"
 
+
+--Database:
+h2
+
+
+--War name:
+spring-RESTful-Web-App
+
