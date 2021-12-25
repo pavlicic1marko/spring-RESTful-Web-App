@@ -28,7 +28,11 @@ Base url + "/swagger-ui.html"
 
 
 --H2 Database:
-Base URL + "h2-console"
+Base URL + "/h2-console"
+Driver Class: "org.h2.Driver"
+JDBC URL: "jdbc:h2:mem:testdb"
+User Name:"sa"
+Password:""
 
 
 --War name:
