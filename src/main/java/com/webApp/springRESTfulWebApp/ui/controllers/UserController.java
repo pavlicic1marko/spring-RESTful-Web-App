@@ -145,11 +145,13 @@ class UserController {
         return returnValue;
     }
 
-    @GetMapping(path = "defaultimage",produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(path = "defaultimagetest",produces = MediaType.IMAGE_JPEG_VALUE)
     public void getFile(HttpServletResponse response) throws IOException {
+        System.out.println("test");
         InputStream in =  ClassLoader.getSystemResourceAsStream("image.jpg");
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         IOUtils.copy(in,response.getOutputStream());
+        //this is for test merge
     }
 
 
