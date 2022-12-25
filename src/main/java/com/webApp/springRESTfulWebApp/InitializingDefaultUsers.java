@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 //test123
+//test feature 2
 @Component
 class InitializingDefaultUsers {
 
