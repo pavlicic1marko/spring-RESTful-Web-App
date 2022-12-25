@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-
+//test feature 2
 @Component
 class InitializingDefaultUsers {
 
